@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product — Hotcraft</title>
+
+  <!-- GLOBAL STYLES -->
+  <link rel="stylesheet" href="../css/base.css">
+
+  <!-- PRODUCT PAGE ONLY -->
+  <link rel="stylesheet" href="../css/pages/product.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <h1>Hotcraft</h1>
+      <div class="nav-links">
+        <a href="./shop.html">Shop</a>
+        <a href="./about.html">About</a>
+        <a href="./custom.html">Custom</a>
+        <a href="./cart.html">
+          Cart (<span id="cartCount">0</span>)
+        </a>
+      </div>
+    </nav>
+
+    <!-- PRODUCT -->
+    <section class="product-layout">
+      <div class="product-gallery">
+        <img id="productImage" alt="Product image">
+      </div>
+
+      <div class="product-details">
+        <h1 id="productName"></h1>
+        <div class="product-price" id="productPrice"></div>
+        <div class="stock" id="productStock"></div>
+
+        <p class="description" id="productDescription"></p>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+  <div class="qty-selector">
+    <button id="qtyMinus">−</button>
+    <span id="qtyValue">1</span>
+    <button id="qtyPlus">+</button>
+  </div>
+
+  <button class="btn" id="addToCartBtn">Add to Cart</button>
+
+</div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ✅ SCRIPTS (ONCE, AT BOTTOM) -->
+  <script src="../js/cart-utils.js"></script>
+  <script src="../js/product.js"></script>
+</body>
+</html>

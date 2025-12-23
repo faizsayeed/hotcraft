@@ -1,0 +1,75 @@
+from flask import Blueprint, request, jsonify
+from database import get_db
+from models.user import create_user, verify_user
+import jwt
+import datetime
+
+# 🔐 SECRET KEY (change later in prod)
+JWT_SECRET = "HOTCRAFT_SECRET_KEY"
+JWT_ALGO = "HS256"
+
+auth = Blueprint("auth", __name__)
+
+# -----------------------------
+# REGISTER
+# -----------------------------
+@auth.route("/auth/register", methods=["POST"])
+def register():
+    data = request.json
+
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+
+    if not name or not email or not password:
+        return jsonify({"error": "All fields required"}), 400
+
+    db = get_db()
+
+    try:
+        create_user(db, name, email, password)
+    except Exception:
+        return jsonify({"error": "Email already exists"}), 409
+
+    return jsonify({"message": "User registered successfully"}), 201
+
+
+# -----------------------------
+# LOGIN
+# -----------------------------
+@auth.route("/auth/login", methods=["POST"])
+def login():
+    data = request.json
+
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Email & password required"}), 400
+
+    db = get_db()
+    user = verify_user(db, email, password)
+
+    if not user:
+        return jsonify({"error": "Invalid credentials"}), 401
+
+    token = jwt.encode(
+        {
+            "id": user["id"],
+            "email": user["email"],
+            "role": user["role"],
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
+        },
+        JWT_SECRET,
+        algorithm=JWT_ALGO
+    )
+
+    return jsonify({
+        "token": token,
+        "user": {
+            "id": user["id"],
+            "name": user["name"],
+            "email": user["email"],
+            "role": user["role"]
+        }
+    })

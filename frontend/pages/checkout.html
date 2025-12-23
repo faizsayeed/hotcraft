@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout — Hotcraft</title>
+  <link rel="stylesheet" href="/frontend/css/base.css">
+  <link rel="stylesheet" href="/frontend/css/cart.css">
+  <link rel="stylesheet" href="/frontend/css/checkout.css">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <h1>Hotcraft</h1>
+  <div class="nav-links">
+    <a href="/frontend/pages/shop.html">Shop</a>
+    <a href="/frontend/pages/cart.html">
+      Cart (<span id="cartCount">0</span>)
+    </a>
+  </div>
+</nav>
+
+<div class="checkout-container">
+
+  <!-- ADDRESS -->
+  <section class="address">
+    <h2>Shipping Address</h2>
+
+    <input id="name" placeholder="Full Name">
+    <input id="phone" placeholder="Phone Number">
+    <textarea id="address" placeholder="Full Address"></textarea>
+    <input id="pincode" placeholder="Pincode">
+  </section>
+
+  <!-- ORDER SUMMARY -->
+  <section class="summary">
+    <h2>Order Summary</h2>
+    <div id="orderItems"></div>
+
+    <h3>Total: ₹<span id="orderTotal">0</span></h3>
+
+    <button id="placeOrderBtn">Place Order</button>
+  </section>
+
+</div>
+
+<script src="/frontend/js/cart-utils.js"></script>
+<script src="/frontend/js/checkout.js"></script>
+
+</body>
+</html>

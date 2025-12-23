@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Database
+backend/database.db
+
+# Uploads (images)
+backend/static/uploads/
+
+# Node / misc
+node_modules/
