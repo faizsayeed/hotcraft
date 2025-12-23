@@ -62,4 +62,6 @@ if __name__ == "__main__":
     create_orders_table(db)        # orders
     create_users_table(db)         # users (auth)
 
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
+
