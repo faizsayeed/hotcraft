@@ -24,7 +24,7 @@ function saveCart(cart) {
 ====================== */
 function updateCartCount() {
   const cart = getCart();
-  const count = cart.reduce((sum, i) => sum + (i.quantity || 0), 0);
+  const count = cart.reduce((sum, i) => sum + (Number(i.quantity) || 0), 0);
 
   const el = document.getElementById("cartCount");
   if (el) el.innerText = count;
@@ -39,11 +39,7 @@ function addToCart(product) {
   let cart = getCart();
   let item = cart.find(p => p.id === product.id);
 
-  // 🔒 STOCK SAFETY
-  if (product.stock <= 0) {
-    alert("Out of stock");
-    return;
-  }
+  if (product.stock <= 0) return;
 
   if (item) {
     if (item.quantity < product.stock) {
@@ -54,22 +50,20 @@ function addToCart(product) {
       id: product.id,
       name: product.name,
       price: Number(product.price),
-      stock: product.stock,
+      stock: Number(product.stock),
       image: product.image || "",
       quantity: 1
     });
   }
 
   saveCart(cart);
-  alert("Added to cart");
 }
 
 /* ======================
    REMOVE ITEM
 ====================== */
 function removeFromCart(id) {
-  const updated = getCart().filter(p => p.id !== id);
-  saveCart(updated);
+  saveCart(getCart().filter(p => p.id !== id));
 }
 
 /* ======================
