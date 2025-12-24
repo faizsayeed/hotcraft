@@ -47,11 +47,7 @@ function renderCart() {
     `;
   });
 
-  totalEl.innerText = total;
-
-const finalEl = document.getElementById("cartTotalFinal");
-if (finalEl) finalEl.innerText = total;
-
+  
   updateCartCount();
 }
 
