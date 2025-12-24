@@ -34,6 +34,34 @@ def place_order():
 
 
 # ------------------------------------------------
+# GET ALL ORDERS (ADMIN ONLY) ✅ REQUIRED
+# ------------------------------------------------
+@orders.route("/admin/orders", methods=["GET"])
+@token_required
+@admin_required
+def get_all_orders():
+    db = get_db()
+    rows = db.execute(
+        "SELECT * FROM orders ORDER BY created_at DESC"
+    ).fetchall()
+
+    return jsonify([
+        {
+            "id": o["id"],
+            "name": o["customer_name"],
+            "phone": o["phone"],
+            "address": o["address"],
+            "pincode": o["pincode"],
+            "items": o["items"],
+            "total": o["total"],
+            "status": o["status"],
+            "date": o["created_at"]
+        }
+        for o in rows
+    ])
+
+
+# ------------------------------------------------
 # UPDATE ORDER STATUS (ADMIN ONLY)
 # ------------------------------------------------
 @orders.route("/admin/orders/<int:order_id>", methods=["PUT"])
@@ -44,7 +72,6 @@ def update_order_status(order_id):
     status = data.get("status", "").upper()
 
     allowed = ["PLACED", "PROCESSING", "COMPLETED", "CANCELLED"]
-
     if status not in allowed:
         return jsonify({"error": "Invalid status"}), 400
 
@@ -59,14 +86,13 @@ def update_order_status(order_id):
 
 
 # ------------------------------------------------
-# DELETE ORDER (ADMIN ONLY) ✅ NEW
+# DELETE ORDER (ADMIN ONLY)
 # ------------------------------------------------
 @orders.route("/admin/orders/<int:order_id>", methods=["DELETE"])
 @token_required
 @admin_required
 def delete_order(order_id):
     db = get_db()
-
     db.execute("DELETE FROM orders WHERE id = ?", (order_id,))
     db.commit()
 
