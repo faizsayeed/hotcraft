@@ -3,14 +3,15 @@ updateCartCount();
 const cart = getCart();
 const itemsDiv = document.getElementById("orderItems");
 const totalEl = document.getElementById("orderTotal");
+const btn = document.getElementById("placeOrderBtn");
 
-if (cart.length === 0) {
-  
-  window.location.href = "/frontend/pages/shop.html";
+if (!cart.length) {
+  window.location.href = "./shop.html";
 }
 
 let total = 0;
 
+// Render items
 cart.forEach(p => {
   total += p.price * p.quantity;
 
@@ -21,7 +22,8 @@ cart.forEach(p => {
 
 totalEl.innerText = total;
 
-document.getElementById("placeOrderBtn").onclick = () => {
+// PLACE ORDER
+btn.onclick = () => {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
@@ -32,23 +34,25 @@ document.getElementById("placeOrderBtn").onclick = () => {
     return;
   }
 
-  fetch("http://127.0.0.1:5000/orders", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name,
-    phone,
-    address,
-    pincode,
-    items: cart,
-    total
+  fetch(`${API}/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name,
+      phone,
+      address,
+      pincode,
+      items: cart,
+      total
+    })
   })
-})
-.then(res => res.json())
-.then(() => {
-  alert("Order placed successfully!");
-  localStorage.removeItem("hotcraft_cart");
-  window.location.href = "/frontend/pages/shop.html";
-});
-
+  .then(res => res.json())
+  .then(() => {
+    alert("Order placed successfully!");
+    localStorage.removeItem("hotcraft_cart");
+    window.location.href = "./shop.html";
+  })
+  .catch(() => {
+    alert("Order failed. Try again.");
+  });
 };

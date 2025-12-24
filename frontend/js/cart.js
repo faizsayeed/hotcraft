@@ -1,6 +1,7 @@
 function renderCart() {
   const container = document.getElementById("cartContainer");
   const totalEl = document.getElementById("cartTotal");
+  const finalEl = document.getElementById("cartTotalFinal");
 
   if (!container || !totalEl) return;
 
@@ -10,6 +11,7 @@ function renderCart() {
   if (!cart.length) {
     container.innerHTML = "<p>Your cart is empty.</p>";
     totalEl.innerText = "0";
+    if (finalEl) finalEl.innerText = "0";
     updateCartCount();
     return;
   }
@@ -17,10 +19,11 @@ function renderCart() {
   let total = 0;
 
   cart.forEach(p => {
-    const qty = Number(p.quantity) || 1;
+    const qty = Number(p.quantity) || 0;
     const price = Number(p.price) || 0;
 
-    // ✅ USE RENDER BACKEND (NOT LOCALHOST)
+    if (qty <= 0) return; // 🔒 SAFETY
+
     const image = p.image
       ? `${API}/uploads/${p.image}`
       : "https://via.placeholder.com/120?text=Hotcraft";
@@ -49,8 +52,8 @@ function renderCart() {
     `;
   });
 
-  // ✅ FIX: update total
   totalEl.innerText = total;
+  if (finalEl) finalEl.innerText = total;
 
   updateCartCount();
 }

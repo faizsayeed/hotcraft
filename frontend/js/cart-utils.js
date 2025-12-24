@@ -20,20 +20,20 @@ function saveCart(cart) {
 }
 
 /* ======================
-   CART COUNT (NAVBAR)
+   CART COUNT
 ====================== */
 function updateCartCount() {
   const cart = getCart();
-  const count = cart.reduce((sum, i) => sum + (Number(i.quantity) || 0), 0);
+  const count = cart.reduce((sum, i) => sum + Number(i.quantity || 0), 0);
 
   const el = document.getElementById("cartCount");
   if (el) el.innerText = count;
 }
 
 /* ======================
-   ADD TO CART
+   ADD TO CART ✅ SINGLE SOURCE OF TRUTH
 ====================== */
-function addToCart(product) {
+function addToCart(product, qty = 1) {
   if (!product || !product.id) return;
 
   let cart = getCart();
@@ -42,9 +42,7 @@ function addToCart(product) {
   if (product.stock <= 0) return;
 
   if (item) {
-    if (item.quantity < product.stock) {
-      item.quantity++;
-    }
+    item.quantity = Math.min(item.quantity + qty, product.stock);
   } else {
     cart.push({
       id: product.id,
@@ -52,7 +50,7 @@ function addToCart(product) {
       price: Number(product.price),
       stock: Number(product.stock),
       image: product.image || "",
-      quantity: 1
+      quantity: qty
     });
   }
 

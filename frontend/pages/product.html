@@ -5,11 +5,7 @@
   <title>Product — Hotcraft</title>
 
   <link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/pages/product.css">
-
-<script src="../js/cart-utils.js"></script>
-<script src="../js/product.js"></script>
-
+  <link rel="stylesheet" href="../css/pages/product.css">
 </head>
 
 <body>
@@ -41,26 +37,23 @@
 
         <p class="description" id="productDescription"></p>
 
-        <!-- ACTIONS -->
         <div class="actions">
+          <div class="qty-selector">
+            <button id="qtyMinus">−</button>
+            <span id="qtyValue">1</span>
+            <button id="qtyPlus">+</button>
+          </div>
 
-  <div class="qty-selector">
-    <button id="qtyMinus">−</button>
-    <span id="qtyValue">1</span>
-    <button id="qtyPlus">+</button>
-  </div>
+          <button type="button" class="btn" id="addToCartBtn">Add to Cart</button>
 
-  <button class="btn" id="addToCartBtn">Add to Cart</button>
-
-</div>
-
+        </div>
       </div>
     </section>
 
   </div>
 
-  <!-- ✅ SCRIPTS (ONCE, AT BOTTOM) -->
-   <script src="../js/config.js"></script>
+  <!-- ✅ SCRIPTS (ONLY HERE, ONLY ONCE, ORDER MATTERS) -->
+  <script src="../js/config.js"></script>
   <script src="../js/cart-utils.js"></script>
   <script src="../js/product.js"></script>
 </body>

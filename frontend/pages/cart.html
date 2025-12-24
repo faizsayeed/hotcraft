@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <h1>Hotcraft</h1>
   <div class="nav-links">
@@ -20,16 +19,13 @@
   </div>
 </nav>
 
-<!-- CART PAGE -->
 <div class="cart-page">
 
-  <!-- LEFT: CART ITEMS -->
   <section class="cart-left">
     <h2>Your Cart</h2>
     <div id="cartContainer"></div>
   </section>
 
-  <!-- RIGHT: SUMMARY -->
   <aside class="cart-right">
     <h3>Order Summary</h3>
 
@@ -50,14 +46,16 @@
       <span>₹<span id="cartTotalFinal">0</span></span>
     </div>
 
-    <button class="checkout-btn" onclick="location.href='/frontend/pages/checkout.html'">
-      Proceed to Checkout
-    </button>
+    <button class="checkout-btn" onclick="location.href='./checkout.html'">
+  Proceed to Checkout
+</button>
+
   </aside>
 
 </div>
 
-<!-- SCRIPTS (ORDER IS IMPORTANT) -->
+<!-- ✅ SCRIPTS (ORDER MATTERS) -->
+<script src="../js/config.js"></script>
 <script src="../js/cart-utils.js"></script>
 <script src="../js/cart.js"></script>
 

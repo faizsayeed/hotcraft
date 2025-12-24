@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Checkout — Hotcraft</title>
-  <link rel="stylesheet" href="/frontend/css/base.css">
-  <link rel="stylesheet" href="/frontend/css/cart.css">
-  <link rel="stylesheet" href="/frontend/css/checkout.css">
 
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/checkout.css">
 </head>
 <body>
 
 <nav class="navbar">
   <h1>Hotcraft</h1>
   <div class="nav-links">
-    <a href="/frontend/pages/shop.html">Shop</a>
-    <a href="/frontend/pages/cart.html">
+    <a href="./shop.html">Shop</a>
+    <a href="./cart.html">
       Cart (<span id="cartCount">0</span>)
     </a>
   </div>
@@ -44,8 +44,10 @@
 
 </div>
 
-<script src="/frontend/js/cart-utils.js"></script>
-<script src="/frontend/js/checkout.js"></script>
+<!-- ✅ SCRIPT ORDER IS CRITICAL -->
+<script src="../js/config.js"></script>
+<script src="../js/cart-utils.js"></script>
+<script src="../js/checkout.js"></script>
 
 </body>
 </html>

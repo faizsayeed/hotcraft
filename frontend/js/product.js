@@ -1,72 +1,38 @@
-
-
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get("id");
+  if (!productId) return;
 
-  if (!productId) {
-    console.error("No product ID in URL");
-    return;
-  }
-
-  // ✅ NEW: Quantity elements
   const qtyMinus = document.getElementById("qtyMinus");
   const qtyPlus = document.getElementById("qtyPlus");
   const qtyValue = document.getElementById("qtyValue");
+  const btn = document.getElementById("addToCartBtn");
 
   let selectedQty = 1;
 
   fetch(`${API}/products/${productId}`)
-    .then(res => {
-      if (!res.ok) throw new Error("Product not found");
-      return res.json();
-    })
+    .then(res => res.json())
     .then(p => {
-      console.log("PRODUCT DATA:", p);
+      document.getElementById("productName").innerText = p.name;
+      document.getElementById("productPrice").innerText = `₹${p.price}`;
+      document.getElementById("productDescription").innerText = p.description;
 
-      // --------------------
-      // BASIC DETAILS
-      // --------------------
-      document.getElementById("productName").innerText =
-        p.name || "Unnamed Product";
+      document.getElementById("productStock").innerText =
+        p.stock > 0 ? `Only ${p.stock} left` : "Out of stock";
 
-      document.getElementById("productPrice").innerText =
-        `₹${p.price || 0}`;
-
-      document.getElementById("productDescription").innerText =
-        p.description || "No description available.";
-
-      const stockEl = document.getElementById("productStock");
-      if (p.stock > 0) {
-        stockEl.innerText = `Only ${p.stock} left`;
-      } else {
-        stockEl.innerText = "Out of stock";
-      }
-
-      // --------------------
-      // IMAGE HANDLING
-      // --------------------
       let images = [];
-
-      if (Array.isArray(p.images)) {
-        images = p.images;
-      } else if (typeof p.images === "string") {
-        try {
-          images = JSON.parse(p.images);
-        } catch {
-          images = [];
-        }
+      if (Array.isArray(p.images)) images = p.images;
+      else {
+        try { images = JSON.parse(p.images); } catch {}
       }
 
-      const mainImage = document.getElementById("productImage");
-      mainImage.src =
-        images.length > 0
+      document.getElementById("productImage").src =
+        images.length
           ? `${API}/uploads/${images[0]}`
-          : "https://via.placeholder.com/400?text=Hotcraft";
+          : "https://via.placeholder.com/400";
 
-      // --------------------
-      // QUANTITY CONTROLS ✅
-      // --------------------
+      qtyValue.innerText = selectedQty;
+
       qtyMinus.onclick = () => {
         if (selectedQty > 1) {
           selectedQty--;
@@ -81,11 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       };
 
-      // --------------------
-      // ADD TO CART (UPDATED)
-      // --------------------
-      const btn = document.getElementById("addToCartBtn");
-
       if (p.stock <= 0) {
         btn.disabled = true;
         btn.innerText = "Out of Stock";
@@ -93,21 +54,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       btn.onclick = () => {
-        for (let i = 0; i < selectedQty; i++) {
-          addToCart({
+        addToCart(
+          {
             id: p.id,
             name: p.name,
             price: p.price,
             stock: p.stock,
-            image: images.length > 0 ? images[0] : null
-          });
-        }
+            image: images[0] || ""
+          },
+          selectedQty
+        );
 
-        alert(`Added ${selectedQty} item(s) to cart`);
+        // ✅ VISUAL CONFIRMATION (NO ALERTS)
+        btn.innerText = "Added ✔";
+        setTimeout(() => {
+          btn.innerText = "Add to Cart";
+        }, 1200);
       };
-    })
-    .catch(err => {
-      console.error("Error loading product:", err);
-      document.body.innerHTML = "<h2>Product not found</h2>";
     });
 });
