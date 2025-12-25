@@ -308,4 +308,9 @@
   }
 }
 
+@media (max-width: 768px) {
+  .shop-navbar .nav-links a {
+    font-size: 13px;
+  }
+}
 
