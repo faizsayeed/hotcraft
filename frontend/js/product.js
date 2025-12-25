@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let selectedQty = 1;
 
+  /* =========================
+     LOAD MAIN PRODUCT
+  ========================= */
+
   fetch(`${API}/products/${productId}`)
     .then(res => res.json())
     .then(p => {
@@ -65,11 +69,46 @@ document.addEventListener("DOMContentLoaded", () => {
           selectedQty
         );
 
-        // ✅ VISUAL CONFIRMATION (NO ALERTS)
         btn.innerText = "Added ✔";
         setTimeout(() => {
           btn.innerText = "Add to Cart";
         }, 1200);
       };
+    });
+
+  /* =========================
+     SIMILAR PRODUCTS
+  ========================= */
+
+  fetch(`${API}/products`)
+    .then(res => res.json())
+    .then(products => {
+      const grid = document.getElementById("similarGrid");
+      if (!grid) return;
+
+      products
+        .filter(p => String(p.id) !== String(productId))
+        .slice(0, 6)
+        .forEach(p => {
+          let img = "https://via.placeholder.com/200";
+
+          if (Array.isArray(p.images) && p.images.length > 0) {
+            img = `${API}/uploads/${p.images[0]}`;
+          }
+
+          const card = document.createElement("a");
+          card.className = "similar-card";
+          card.href = `product.html?id=${p.id}`;
+
+          card.innerHTML = `
+            <img src="${img}" alt="${p.name}">
+            <div class="info">
+              <h4>${p.name || "Hotcraft Diorama"}</h4>
+              <span>₹${p.price}</span>
+            </div>
+          `;
+
+          grid.appendChild(card);
+        });
     });
 });

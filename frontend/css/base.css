@@ -1,3 +1,11 @@
+/* =========================
+   FONT IMPORT (ONLY WHAT IS USED)
+========================= */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap");
+
+/* =========================
+   ROOT VARIABLES
+========================= */
 :root {
   --bg: #fafafa;
   --text: #111111;
@@ -6,19 +14,37 @@
   --card: #ffffff;
 }
 
+/* =========================
+   RESET
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* =========================
+   GLOBAL TYPOGRAPHY (SINGLE SOURCE)
+========================= */
+html,
 body {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Montserrat", system-ui, -apple-system, sans-serif;
+  font-weight: 500;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
 }
 
+/* =========================
+   HEADINGS
+========================= */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+/* =========================
+   LINKS & MEDIA
+========================= */
 a {
   text-decoration: none;
   color: inherit;
@@ -29,23 +55,9 @@ img {
   display: block;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
-  background: #fafafa;
-  color: #111;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* NAVBAR */
+/* =========================
+   NAVBAR (GLOBAL)
+========================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -60,6 +72,18 @@ a {
 
 .nav-links a {
   margin-left: 24px;
-  font-weight: 500;
+  font-weight: 600;
   color: #333;
+}
+
+/* =========================
+   PRODUCT TEXT (GLOBAL)
+========================= */
+.product-info h3 {
+  font-weight: 800;        /* strong, Imago-like */
+  letter-spacing: 0.3px;
+}
+
+.price {
+  font-weight: 800;
 }

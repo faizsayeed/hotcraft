@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product — Hotcraft</title>
 
   <link rel="stylesheet" href="../css/base.css">
@@ -11,15 +12,26 @@
 <body>
   <div class="container">
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-      <h1>Hotcraft</h1>
+    <!-- NAVBAR (MATCHES SHOP PAGE) -->
+    <nav class="navbar shop-navbar">
+      <div class="brand">
+        <span class="brand-mark">▣</span>
+        <span class="brand-name">HOTCRAFT</span>
+      </div>
+
       <div class="nav-links">
         <a href="./shop.html">Shop</a>
         <a href="./about.html">About</a>
         <a href="./custom.html">Custom</a>
-        <a href="./cart.html">
-          Cart (<span id="cartCount">0</span>)
+
+        <a href="./cart.html" class="cart-link">
+          <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12z"></path>
+            <circle cx="9" cy="21" r="1.5"></circle>
+            <circle cx="18" cy="21" r="1.5"></circle>
+          </svg>
+          <span class="cart-text">Cart</span>
+          <span class="cart-badge" id="cartCount">0</span>
         </a>
       </div>
     </nav>
@@ -44,15 +56,21 @@
             <button id="qtyPlus">+</button>
           </div>
 
-          <button type="button" class="btn" id="addToCartBtn">Add to Cart</button>
-
+          <button type="button" class="btn" id="addToCartBtn">
+            Add to Cart
+          </button>
         </div>
       </div>
     </section>
 
   </div>
+  <!-- SIMILAR PRODUCTS -->
+<section class="similar-products">
+  <h2>You may also like</h2>
+  <div class="similar-grid" id="similarGrid"></div>
+</section>
 
-  <!-- ✅ SCRIPTS (ONLY HERE, ONLY ONCE, ORDER MATTERS) -->
+  <!-- ✅ SCRIPTS (ORDER UNCHANGED) -->
   <script src="../js/config.js"></script>
   <script src="../js/cart-utils.js"></script>
   <script src="../js/product.js"></script>

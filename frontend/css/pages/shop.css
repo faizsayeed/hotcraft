@@ -8,7 +8,7 @@
 
 .shop-navbar {
   margin-bottom: 0;
-  border-bottom: none !important; /* 🔥 remove gap line */
+  border-bottom: none !important;
   padding-bottom: 0;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -78,24 +78,22 @@
 }
 
 /* -------------------------------
-   BANNER (NO GAP, FULL WIDTH)
+   BANNER
 -------------------------------- */
 
 .shop-banner {
   width: 100%;
   height: 60vh;
   min-height: 360px;
-
   background-image: url("../../assets/shop-banner.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   background-color: #fafafa;
-
   margin: 0;
   padding: 0;
   position: relative;
-  top: -1px; /* removes sub-pixel gap */
+  top: -1px;
 }
 
 /* -------------------------------
@@ -107,20 +105,18 @@
 }
 
 /* -------------------------------
-   PRODUCT GRID (DESKTOP)
+   PRODUCT GRID
 -------------------------------- */
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -137,10 +133,7 @@
   overflow: hidden;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.06);
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .product-card:hover {
@@ -149,7 +142,7 @@
 }
 
 /* -------------------------------
-   IMAGE (SQUARE AREA)
+   IMAGE
 -------------------------------- */
 
 .image-wrap {
@@ -170,28 +163,32 @@
 }
 
 /* -------------------------------
-   PRODUCT INFO
+   PRODUCT INFO (FONT FIX HERE)
 -------------------------------- */
 
 .product-info {
   padding: 16px 18px 20px;
 }
 
+/* ✅ Clear, readable product name */
 .product-info h3 {
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.4px;
 }
 
+/* Secondary text */
 .product-info p {
   font-size: 13px;
   color: #aaa;
   margin-bottom: 12px;
+  font-weight: 500;
 }
 
+/* Price */
 .price {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800;
 }
 
 /* -------------------------------
@@ -208,13 +205,15 @@
 }
 
 /* -------------------------------
-   NAV LINKS HOVER
+   NAV LINKS HOVER (UNCHANGED)
 -------------------------------- */
 
 .shop-navbar .nav-links a {
   position: relative;
   display: inline-block;
   transition: color 0.25s ease, transform 0.25s ease;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .shop-navbar .nav-links a:hover {
@@ -237,12 +236,11 @@
 }
 
 /* =====================================================
-   MOBILE LAYOUT — FINAL & CLEAN (SHOP ONLY)
+   MOBILE
 ===================================================== */
 
 @media (max-width: 768px) {
 
-  /* ===== NAVBAR ===== */
   .shop-navbar {
     padding: 10px 14px !important;
     flex-wrap: nowrap;
@@ -254,30 +252,18 @@
     gap: 10px;
   }
 
-  .shop-navbar .nav-links a {
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-  /* Cart: icon + badge only */
   .cart-text {
     display: none;
   }
 
-  /* ===== BANNER ===== */
   .shop-banner {
-    height: 220px;               /* 🔥 fixed height */
+    height: 220px;
     min-height: 220px;
-
-    background-size: cover;      /* 🔥 no side gaps */
+    background-size: cover;
     background-position: center;
-
-    margin: 0 !important;
-    padding: 0 !important;
     overflow: hidden;
   }
 
-  /* ===== PRODUCTS ===== */
   .product-grid {
     grid-template-columns: 1fr;
     gap: 18px;
@@ -291,11 +277,51 @@
     font-size: 16px;
   }
 
-  .product-info p {
-    font-size: 12px;
-  }
-
   .price {
     font-size: 16px;
   }
+}
+/* =========================
+   FINAL PRODUCT TITLE TUNING
+========================= */
+
+.product-info h3 {
+  font-size: 18px;        /* 🔥 visual difference */
+  font-weight: 700;      /* strong but not ugly */
+  letter-spacing: 0.4px; /* premium spacing */
+  line-height: 1.25;
+}
+/* =====================================
+   PRODUCT TEXT — BOLD, DARK, ALL CAPS
+===================================== */
+
+.product-info h3 {
+  text-transform: uppercase;     /* 🔥 ALL CAPS */
+  font-size: 18px;               /* 🔥 visually bigger */
+  font-weight: 800;              /* 🔥 bold */
+  letter-spacing: 0.12em;        /* 🔥 luxury spacing */
+  line-height: 1.3;
+  color: #ffffff;                /* keeps contrast */
+}
+
+/* Price dominance */
+.price {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+/* Supporting text stays readable */
+.product-info p {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.product-info h3 {
+  font-size: 16px;
+  letter-spacing: 0.1em;
+}
+
+.price {
+  font-size: 16px;
 }

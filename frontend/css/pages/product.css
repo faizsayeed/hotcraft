@@ -1,3 +1,86 @@
+/* =====================================================
+   PRODUCT PAGE — PREMIUM UI (LOGIC SAFE)
+===================================================== */
+
+/* -------------------------------
+   NAVBAR (MATCH SHOP)
+-------------------------------- */
+
+.shop-navbar {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brand-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Cart */
+.cart-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cart-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #111;
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.cart-text {
+  font-size: 13px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #111;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* Nav hover */
+.shop-navbar .nav-links a {
+  position: relative;
+  display: inline-block;
+}
+
+.shop-navbar .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1.5px;
+  background: #111;
+  transition: width 0.3s ease;
+}
+
+.shop-navbar .nav-links a:hover::after {
+  width: 100%;
+}
+
 /* =========================
    PRODUCT PAGE LAYOUT
 ========================= */
@@ -5,10 +88,14 @@
 .product-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 60px;
-  margin: 60px auto;
-  padding: 0 20px;
-  max-width: 1100px;
+  gap: 44px;
+
+  margin: 52px 0;
+  margin-left: 24px;
+  margin-right: auto;
+
+  padding-right: 16px;
+  max-width: 1200px;
 }
 
 /* =========================
@@ -16,9 +103,10 @@
 ========================= */
 
 .product-gallery {
-  background: var(--bg-card);
-  padding: 24px;
-  border-radius: 20px;
+  background: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,10 +114,10 @@
 
 .product-gallery img {
   width: 100%;
-  max-height: 520px;
+  max-height: 360px;     /* 🔥 reduced */
   object-fit: contain;
-  border-radius: 14px;
-  transition: transform 0.4s ease;
+  border-radius: 12px;
+  transition: transform 0.35s ease;
 }
 
 .product-gallery:hover img {
@@ -40,36 +128,30 @@
    PRODUCT DETAILS
 ========================= */
 
-.product-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .product-details h1 {
-  font-size: 34px;
+  font-size: 26px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .product-price {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--accent);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .stock {
-  font-size: 14px;
+  font-size: 13px;
   color: #16a34a;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .description {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--text-muted);
-  margin-bottom: 28px;
+  color: var(--muted);
+  margin-bottom: 24px;
 }
 
 /* =========================
@@ -79,7 +161,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
 }
 
 /* =========================
@@ -89,31 +171,24 @@
 .qty-selector {
   display: flex;
   align-items: center;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
   overflow: hidden;
-  background: rgba(255,255,255,0.03);
 }
 
 .qty-selector button {
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
   border: none;
   background: transparent;
-  color: var(--text-main);
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
-  transition: background 0.25s ease;
-}
-
-.qty-selector button:hover {
-  background: rgba(255,255,255,0.08);
 }
 
 .qty-selector span {
-  width: 46px;
+  width: 36px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -122,10 +197,10 @@
 ========================= */
 
 .btn {
-  padding: 14px 28px;
+  padding: 11px 22px;
   background: linear-gradient(135deg, #111, #000);
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 12px;
   border: none;
@@ -134,29 +209,105 @@
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-}
-
-.btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.3);
 }
 
 /* =========================
-   MOBILE RESPONSIVE
+   MOBILE
 ========================= */
 
 @media (max-width: 900px) {
   .product-layout {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
+    margin-top: 28px;
+    margin-left: 0;
   }
 
-  .product-details h1 {
-    font-size: 28px;
+  .cart-text {
+    display: none;
+  }
+}
+
+/* =========================
+   SIMILAR PRODUCTS
+========================= */
+
+.similar-products {
+  width: 100%;
+  max-width: 1200px;
+  margin: 60px auto 36px;
+  padding: 0 16px;
+}
+
+.similar-products h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.similar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.similar-card {
+  background: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.similar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.4);
+}
+
+/* IMAGE */
+.similar-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* INFO */
+.similar-card .info {
+  padding: 12px 14px 16px;
+}
+
+.similar-card h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.similar-card span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+  .similar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .similar-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .product-price {
-    font-size: 22px;
+  .similar-card img {
+    height: 150px;
   }
 }
