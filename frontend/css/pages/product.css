@@ -2,6 +2,16 @@
    PRODUCT PAGE — PREMIUM UI (LOGIC SAFE)
 ===================================================== */
 
+/* =========================
+   GLOBAL TEXT RULE
+========================= */
+
+body {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
 /* -------------------------------
    NAVBAR (MATCH SHOP)
 -------------------------------- */
@@ -23,13 +33,13 @@
 
 .brand-mark {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .brand-name {
   font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
 }
 
 /* Nav links */
@@ -37,13 +47,14 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: nowrap;          /* 🔥 prevent wrapping */
+  flex-wrap: nowrap;
 }
 
 .shop-navbar .nav-links a {
   white-space: nowrap;
   position: relative;
   display: inline-block;
+  font-weight: 700;
 }
 
 /* Nav hover */
@@ -80,6 +91,7 @@
 
 .cart-text {
   font-size: 13px;
+  font-weight: 700;
 }
 
 .cart-badge {
@@ -91,7 +103,7 @@
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 /* =========================
@@ -141,26 +153,29 @@
 
 .product-details h1 {
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 8px;
 }
 
 .product-price {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--accent);
   margin-bottom: 4px;
 }
 
 .stock {
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 700;
   color: #16a34a;
   margin-bottom: 16px;
 }
 
+/* keep description readable */
 .description {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.6;
+  font-weight: 600;
   color: var(--muted);
   margin-bottom: 24px;
 }
@@ -193,6 +208,7 @@
   border: none;
   background: transparent;
   font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -200,7 +216,7 @@
   width: 36px;
   text-align: center;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 /* =========================
@@ -211,8 +227,9 @@
   padding: 11px 22px;
   background: linear-gradient(135deg, #111, #000);
   color: #fff;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
   border-radius: 12px;
   border: none;
   cursor: pointer;
@@ -252,8 +269,8 @@
 }
 
 .similar-products h2 {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
   margin-bottom: 22px;
 }
 
@@ -288,14 +305,14 @@
 }
 
 .similar-card h4 {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
 .similar-card span {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 /* =========================
@@ -324,12 +341,5 @@
 
   .brand-name {
     font-size: 15px;
-  }
-}
-
-/* Extra-small phones */
-@media (max-width: 360px) {
-  .shop-navbar .nav-links {
-    gap: 10px;
   }
 }
