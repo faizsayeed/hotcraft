@@ -90,13 +90,12 @@
   grid-template-columns: 1.1fr 0.9fr;
   gap: 44px;
 
-  margin: 52px 0;
-  margin-left: 24px;
-  margin-right: auto;
+  margin: 52px auto;        /* 🔥 same centering model */
+  padding: 0 16px;         /* 🔥 SAME as similar-products */
 
-  padding-right: 16px;
-  max-width: 1200px;
+  max-width: 1200px;       /* 🔥 SAME width */
 }
+
 
 /* =========================
    PRODUCT IMAGE
