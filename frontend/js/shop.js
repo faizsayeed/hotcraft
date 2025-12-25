@@ -60,3 +60,9 @@ fetch(`${API}/products`)
     document.getElementById("productGrid").innerHTML =
       "<p>Failed to load products.</p>";
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+  if (typeof updateCartCount === "function") {
+    updateCartCount();
+  }
+});
