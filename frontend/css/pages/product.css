@@ -9,6 +9,10 @@
 .shop-navbar {
   border-bottom: none;
   margin-bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .brand {
@@ -26,6 +30,36 @@
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 1px;
+}
+
+/* Nav links */
+.shop-navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;          /* 🔥 prevent wrapping */
+}
+
+.shop-navbar .nav-links a {
+  white-space: nowrap;
+  position: relative;
+  display: inline-block;
+}
+
+/* Nav hover */
+.shop-navbar .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1.5px;
+  background: #111;
+  transition: width 0.3s ease;
+}
+
+.shop-navbar .nav-links a:hover::after {
+  width: 100%;
 }
 
 /* Cart */
@@ -60,27 +94,6 @@
   font-weight: 600;
 }
 
-/* Nav hover */
-.shop-navbar .nav-links a {
-  position: relative;
-  display: inline-block;
-}
-
-.shop-navbar .nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 1.5px;
-  background: #111;
-  transition: width 0.3s ease;
-}
-
-.shop-navbar .nav-links a:hover::after {
-  width: 100%;
-}
-
 /* =========================
    PRODUCT PAGE LAYOUT
 ========================= */
@@ -90,12 +103,11 @@
   grid-template-columns: 1.1fr 0.9fr;
   gap: 44px;
 
-  margin: 52px auto;        /* 🔥 same centering model */
-  padding: 0 16px;         /* 🔥 SAME as similar-products */
+  margin: 52px auto;
+  padding: 0 16px;
 
-  max-width: 1200px;       /* 🔥 SAME width */
+  max-width: 1200px;
 }
-
 
 /* =========================
    PRODUCT IMAGE
@@ -113,7 +125,7 @@
 
 .product-gallery img {
   width: 100%;
-  max-height: 360px;     /* 🔥 reduced */
+  max-height: 360px;
   object-fit: contain;
   border-radius: 12px;
   transition: transform 0.35s ease;
@@ -213,7 +225,7 @@
 }
 
 /* =========================
-   MOBILE
+   MOBILE PRODUCT LAYOUT
 ========================= */
 
 @media (max-width: 900px) {
@@ -221,7 +233,6 @@
     grid-template-columns: 1fr;
     gap: 32px;
     margin-top: 28px;
-    margin-left: 0;
   }
 
   .cart-text {
@@ -252,7 +263,6 @@
   gap: 20px;
 }
 
-/* CARD */
 .similar-card {
   background: #111;
   border-radius: 12px;
@@ -267,14 +277,12 @@
   box-shadow: 0 14px 32px rgba(0,0,0,0.4);
 }
 
-/* IMAGE */
 .similar-card img {
   width: 100%;
   height: 160px;
   object-fit: cover;
 }
 
-/* INFO */
 .similar-card .info {
   padding: 12px 14px 16px;
 }
@@ -308,5 +316,20 @@
 
   .similar-card img {
     height: 150px;
+  }
+
+  .shop-navbar .nav-links {
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 360px) {
+  .shop-navbar .nav-links {
+    gap: 10px;
   }
 }
