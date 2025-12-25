@@ -272,3 +272,30 @@
     font-size: 16px;
   }
 }
+
+/* =====================================================
+   MOBILE NAVBAR + BANNER HARD FIX
+===================================================== */
+
+@media (max-width: 768px) {
+
+  /* 1️⃣ Reduce navbar height on mobile */
+  .shop-navbar {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* 2️⃣ Kill ALL banner spacing issues */
+  .shop-banner {
+    height: auto !important;       /* 🔥 stop vh-based height */
+    min-height: 0 !important;
+
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important; /* small gap before products */
+
+    background-size: cover;
+    aspect-ratio: 16 / 9;          /* 🔥 clean mobile ratio */
+  }
+}
