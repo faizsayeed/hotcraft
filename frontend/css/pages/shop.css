@@ -237,15 +237,25 @@
 }
 
 /* =====================================================
-   MOBILE FIXES (PHONE VIEW)
+   MOBILE FIXES (FINAL)
 ===================================================== */
 
 @media (max-width: 768px) {
-  /* Banner */
+
+  /* Navbar */
+  .shop-navbar {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* Banner — FIXED */
   .shop-banner {
-    height: 36vh;
-    min-height: 220px;
+    height: 240px;
+    min-height: 240px;
     background-size: cover;
+    background-position: center;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* Grid */
@@ -259,7 +269,7 @@
     padding: 12px 14px 60px;
   }
 
-  /* Text sizing */
+  /* Text */
   .product-info h3 {
     font-size: 16px;
   }
@@ -270,32 +280,5 @@
 
   .price {
     font-size: 16px;
-  }
-}
-
-/* =====================================================
-   MOBILE NAVBAR + BANNER HARD FIX
-===================================================== */
-
-@media (max-width: 768px) {
-
-  /* 1️⃣ Reduce navbar height on mobile */
-  .shop-navbar {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-  }
-
-  /* 2️⃣ Kill ALL banner spacing issues */
-  .shop-banner {
-    height: auto !important;       /* 🔥 stop vh-based height */
-    min-height: 0 !important;
-
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 8px !important; /* small gap before products */
-
-    background-size: cover;
-    aspect-ratio: 16 / 9;          /* 🔥 clean mobile ratio */
   }
 }
