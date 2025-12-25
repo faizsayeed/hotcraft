@@ -282,3 +282,30 @@
     font-size: 16px;
   }
 }
+@media (max-width: 768px) {
+
+  /* Navbar layout fix */
+  .shop-navbar {
+    flex-wrap: nowrap;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Reduce cart text width */
+  .cart-text {
+    display: none; /* icon + badge only on mobile */
+  }
+}
+
+/* Prevent banner horizontal overflow on mobile */
+@media (max-width: 768px) {
+  .shop-banner {
+    overflow: hidden;
+  }
+}
+
+
