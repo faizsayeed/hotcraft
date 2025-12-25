@@ -42,7 +42,7 @@ body {
   letter-spacing: 1.2px;
 }
 
-/* Nav links */
+/* Nav links — DESKTOP SAFE */
 .shop-navbar .nav-links {
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@ body {
   width: 100%;
 }
 
-/* Cart */
+/* Cart — DESKTOP SAFE */
 .cart-link {
   position: relative;
   display: inline-flex;
@@ -114,10 +114,8 @@ body {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 44px;
-
   margin: 52px auto;
   padding: 0 16px;
-
   max-width: 1200px;
 }
 
@@ -171,7 +169,6 @@ body {
   margin-bottom: 16px;
 }
 
-/* keep description readable */
 .description {
   font-size: 13px;
   line-height: 1.6;
@@ -242,7 +239,7 @@ body {
 }
 
 /* =========================
-   MOBILE PRODUCT LAYOUT
+   MOBILE FIXES — ISOLATED
 ========================= */
 
 @media (max-width: 900px) {
@@ -254,6 +251,30 @@ body {
 
   .cart-text {
     display: none;
+  }
+}
+
+/* 🔥 MOBILE NAVBAR — SAFE (NO DESKTOP IMPACT) */
+@media (max-width: 600px) {
+  .shop-navbar {
+    padding: 0 12px;
+  }
+
+  .shop-navbar .nav-links {
+    gap: 10px;
+  }
+
+  .shop-navbar .nav-links a {
+    font-size: 12px;
+  }
+
+  /* ONLY cart moves right on mobile */
+  .shop-navbar .cart-link {
+    margin-left: 8px;
+  }
+
+  .brand-name {
+    font-size: 15px;
   }
 }
 
@@ -315,10 +336,6 @@ body {
   font-weight: 800;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
 @media (max-width: 1024px) {
   .similar-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -333,13 +350,5 @@ body {
 
   .similar-card img {
     height: 150px;
-  }
-
-  .shop-navbar .nav-links {
-    gap: 12px;
-  }
-
-  .brand-name {
-    font-size: 15px;
   }
 }
