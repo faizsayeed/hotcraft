@@ -237,39 +237,56 @@
 }
 
 /* =====================================================
-   MOBILE FIXES (FINAL)
+   MOBILE LAYOUT — FINAL & CLEAN (SHOP ONLY)
 ===================================================== */
 
 @media (max-width: 768px) {
 
-  /* Navbar */
+  /* ===== NAVBAR ===== */
   .shop-navbar {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+    padding: 10px 14px !important;
+    flex-wrap: nowrap;
   }
 
-  /* Banner — FIXED */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .shop-navbar .nav-links a {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* Cart: icon + badge only */
+  .cart-text {
+    display: none;
+  }
+
+  /* ===== BANNER ===== */
   .shop-banner {
-    height: 240px;
-    min-height: 240px;
-    background-size: cover;
+    height: 220px;               /* 🔥 fixed height */
+    min-height: 220px;
+
+    background-size: cover;      /* 🔥 no side gaps */
     background-position: center;
+
     margin: 0 !important;
     padding: 0 !important;
+    overflow: hidden;
   }
 
-  /* Grid */
+  /* ===== PRODUCTS ===== */
   .product-grid {
     grid-template-columns: 1fr;
     gap: 18px;
   }
 
-  /* Spacing */
   .shop-wrapper {
     padding: 12px 14px 60px;
   }
 
-  /* Text */
   .product-info h3 {
     font-size: 16px;
   }
@@ -282,35 +299,3 @@
     font-size: 16px;
   }
 }
-@media (max-width: 768px) {
-
-  /* Navbar layout fix */
-  .shop-navbar {
-    flex-wrap: nowrap;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  /* Reduce cart text width */
-  .cart-text {
-    display: none; /* icon + badge only on mobile */
-  }
-}
-
-/* Prevent banner horizontal overflow on mobile */
-@media (max-width: 768px) {
-  .shop-banner {
-    overflow: hidden;
-  }
-}
-
-@media (max-width: 768px) {
-  .shop-navbar .nav-links a {
-    font-size: 13px;
-  }
-}
-
