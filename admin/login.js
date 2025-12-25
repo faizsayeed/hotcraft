@@ -1,8 +1,8 @@
-const API = "http://127.0.0.1:5000";
+// admin/login.js
 
 function loginAdmin() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   if (!email || !password) {
     alert("Email and password required");
@@ -21,8 +21,7 @@ function loginAdmin() {
         return;
       }
 
-      // 🔐 Only ADMIN allowed
-      if (data.user.role !== "ADMIN") {
+      if (!data.user || data.user.role !== "ADMIN") {
         alert("Admin access only");
         return;
       }

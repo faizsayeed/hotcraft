@@ -8,28 +8,44 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/pages/shop.css">
 
-  <!-- API config (Render backend) -->
+  <!-- API config -->
   <script src="../js/config.js"></script>
 
-  <!-- Shop logic -->
+  <!-- Shop logic (DO NOT TOUCH) -->
   <script src="../js/shop.js" defer></script>
 </head>
 
 <body>
   <div class="container">
 
-    <nav class="navbar">
-      <h1>Hotcraft</h1>
+    <!-- NAVBAR -->
+    <nav class="navbar shop-navbar">
+      <div class="brand">
+        <span class="brand-mark">▣</span>
+        <span class="brand-name">HOTCRAFT</span>
+      </div>
+
       <div class="nav-links">
         <a href="shop.html">Shop</a>
         <a href="about.html">About</a>
         <a href="custom.html">Custom</a>
-        <a href="cart.html">
-          Cart (<span id="cartCount">0</span>)
+
+        <a href="cart.html" class="cart-link">
+          <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12z"></path>
+            <circle cx="9" cy="21" r="1.5"></circle>
+            <circle cx="18" cy="21" r="1.5"></circle>
+          </svg>
+          <span class="cart-text">Cart</span>
+          <span class="cart-badge" id="cartCount">0</span>
         </a>
       </div>
     </nav>
 
+    <!-- ✅ ONLY ONE BANNER -->
+    <section class="shop-banner"></section>
+
+    <!-- ✅ PRODUCT GRID (LOGIC REQUIRED) -->
     <section class="shop-wrapper">
       <div class="product-grid" id="productGrid"></div>
     </section>

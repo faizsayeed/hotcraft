@@ -9,34 +9,26 @@
 
 <h1>Hotcraft Admin Panel</h1>
 
-<!-- ADMIN NAVIGATION -->
 <div class="admin-nav">
   <button onclick="showProducts()">Products</button>
   <button onclick="showOrders()">Orders</button>
   <button onclick="logoutAdmin()" style="margin-left:auto;">Logout</button>
 </div>
 
-<!-- ================= PRODUCTS SECTION ================= -->
 <div id="productsSection">
 
-  <!-- ADD PRODUCT -->
   <section class="add">
     <h2>Add Product</h2>
 
-    <input id="name" name="name" placeholder="Product name">
-
-    <input id="price" name="price" type="number" placeholder="Price">
-
-    <input id="stock" name="stock" type="number" placeholder="Stock">
-
-    <textarea id="description" name="description" placeholder="Description"></textarea>
-
-    <input type="file" id="images" name="images" multiple accept="image/*">
+    <input id="name" placeholder="Product name">
+    <input id="price" type="number" placeholder="Price">
+    <input id="stock" type="number" placeholder="Stock">
+    <textarea id="description" placeholder="Description"></textarea>
+    <input type="file" id="images" multiple accept="image/*">
 
     <button onclick="addProduct()">Add Product</button>
   </section>
 
-  <!-- PRODUCT LIST -->
   <section class="list">
     <h2>Products</h2>
     <div id="productList"></div>
@@ -44,7 +36,6 @@
 
 </div>
 
-<!-- ================= ORDERS SECTION ================= -->
 <div id="ordersSection" style="display:none;">
   <h2>Orders</h2>
 
@@ -57,27 +48,23 @@
   <div id="ordersList"></div>
 </div>
 
-<!-- ================= AUTH CHECK ================= -->
+<!-- 🔐 AUTH CHECK -->
 <script>
-  // 🔐 Block access if token missing
   const token = localStorage.getItem("token");
-
   if (!token) {
-    alert("Admin login required");
-    window.location.href = "/admin/login.html"; // (we'll create this next)
+    window.location.href = "login.html";
   }
 
   function logoutAdmin() {
     localStorage.removeItem("token");
-    alert("Logged out");
-    window.location.href = "/admin/login.html";
+    window.location.href = "login.html";
   }
 </script>
-<script src="../js/config.js"></script>
+
+<!-- ✅ ORDER MATTERS -->
+<script src="../frontend/js/config.js"></script>
 <script src="admin.js"></script>
 
-
-<!-- TOAST CONTAINER -->
 <div id="toast-container"></div>
 
 </body>

@@ -71,14 +71,24 @@ function loadProducts() {
 }
 
 function addProduct() {
+  const nameInput = document.getElementById("name");
+  const priceInput = document.getElementById("price");
+  const stockInput = document.getElementById("stock");
+  const descInput = document.getElementById("description");
+  const imagesInput = document.getElementById("images");
+
+  if (!nameInput.value || nameInput.value.trim() === "") {
+    showToast("Product name is required", "error");
+    return;
+  }
+
   const formData = new FormData();
+  formData.append("name", nameInput.value.trim());
+  formData.append("price", priceInput.value);
+  formData.append("stock", stockInput.value);
+  formData.append("description", descInput.value);
 
-  formData.append("name", name.value);
-  formData.append("price", price.value);
-  formData.append("stock", stock.value);
-  formData.append("description", description.value);
-
-  for (let file of images.files) {
+  for (let file of imagesInput.files) {
     formData.append("images", file);
   }
 
@@ -89,9 +99,17 @@ function addProduct() {
   })
     .then(res => res.json())
     .then(data => {
-      showToast(data.message || "Product added", "success");
-      loadProducts();
-    })
+  showToast(data.message || "Product added", "success");
+  loadProducts();
+
+  // ✅ CLEAR INPUTS AFTER SUCCESS
+  nameInput.value = "";
+  priceInput.value = "";
+  stockInput.value = "";
+  descInput.value = "";
+  imagesInput.value = ""; // clears file input
+})
+
     .catch(() => showToast("Add product failed", "error"));
 }
 

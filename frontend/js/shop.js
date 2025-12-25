@@ -41,7 +41,12 @@ fetch(`${API}/products`)
         </div>
 
         <div class="product-info">
-          <h3>${p.name}</h3>
+          <h3>${
+              !p.name || p.name === "undefined"
+              ? "Hotcraft Diorama"
+                : p.name
+          }</h3>
+
           <p>Handmade · Limited Edition</p>
           <span class="price">₹${p.price}</span>
         </div>
