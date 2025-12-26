@@ -92,7 +92,7 @@
   height: 60vh;
   min-height: 360px;
   background-image: url("../../assets/shop-banner.png");
-  background-size: contain;
+  background-size: contain; /* Keeps desktop look */
   background-position: center;
   background-repeat: no-repeat;
   background-color: #fafafa;
@@ -167,23 +167,23 @@
 }
 
 /* =====================================
-   MOBILE FIXES (ADDED WITHOUT REMOVING)
+   MOBILE FIXES (FOR BANNER & NAVBAR)
 ===================================== */
 @media (max-width: 768px) {
   .shop-navbar {
     padding: 10px 14px;
-    flex-wrap: nowrap !important; /* Forces one line */
+    flex-wrap: nowrap !important; /* Keep cart on same line */
   }
 
   .nav-links {
-    gap: 10px; /* Reduced gap for small screens */
+    gap: 8px; /* Tighter for mobile */
     margin-left: auto;
   }
 
-  /* Force override the margin-left from base.css */
   .nav-links a.nav-item {
     margin-left: 0 !important; 
-    font-size: 12px;
+    font-size: 11px;
+    letter-spacing: 0;
   }
 
   .cart-text {
@@ -191,12 +191,15 @@
   }
 
   .cart-link {
-    flex-shrink: 0; /* Ensures cart doesn't disappear */
+    flex-shrink: 0;
   }
 
+  /* BANNER MOBILE FIX */
   .shop-banner {
-    height: 220px;
-    background-size: cover;
+    height: 250px; /* Adjusted height */
+    min-height: unset;
+    background-size: cover; /* This makes it fill the screen width */
+    background-position: center;
   }
 
   .product-grid {
