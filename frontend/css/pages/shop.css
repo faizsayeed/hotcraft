@@ -1,5 +1,5 @@
 /* =====================================================
-   SHOP PAGE — FULL ORIGINAL VERSION + FINAL MOBILE FIX
+   SHOP PAGE — FULL ORIGINAL VERSION + MOBILE GRID FIX
 ===================================================== */
 
 .shop-navbar {
@@ -168,12 +168,12 @@
 }
 
 /* =====================================
-   MOBILE FIXES (FOR BANNER & NAVBAR)
+   MOBILE FIXES (GRID, BANNER & NAVBAR)
 ===================================== */
 @media (max-width: 768px) {
   .shop-navbar {
     padding: 10px 14px;
-    flex-wrap: nowrap !important; /* FIXED: Keeps cart on same line */
+    flex-wrap: nowrap !important;
   }
 
   .nav-links {
@@ -182,7 +182,7 @@
   }
 
   .nav-links a.nav-item {
-    margin-left: 0 !important; /* FIXED: Overrides base.css */
+    margin-left: 0 !important;
     font-size: 11px;
     letter-spacing: 0;
   }
@@ -192,26 +192,43 @@
   }
 
   .cart-link {
-    flex-shrink: 0; /* FIXED: Prevents cart from being squeezed out */
+    flex-shrink: 0;
   }
 
-  /* --- BANNER MOBILE FINAL FIX --- */
   .shop-banner {
     width: 100%;
-    /* This matches your banner's rectangle shape (4 units wide, 1 unit tall) */
     aspect-ratio: 4 / 1; 
-    
-    /* Remove fixed heights so it can scale naturally */
     height: auto; 
     min-height: unset; 
-    
-    /* Ensure the full image is visible without being cut off */
     background-size: 100% 100%; 
     background-position: center;
   }
 
+  /* --- 🎯 2 PRODUCTS PER ROW FIX --- */
   .product-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+    gap: 12px; /* Smaller gap so they fit well */
+    padding: 0 4px;
+  }
+
+  .image-wrap {
+    padding: 8px; /* Less padding inside the card for mobile */
+  }
+
+  .product-info {
+    padding: 10px 10px 15px; /* Tighter info section */
+  }
+
+  .product-info h3 {
+    font-size: 14px; /* Smaller title to avoid overlapping */
+  }
+
+  .price {
+    font-size: 15px; /* Smaller price */
+  }
+
+  .product-info p {
+    font-size: 11px; /* Smaller category text */
+    margin-bottom: 8px;
   }
 }
