@@ -325,3 +325,48 @@
 .price {
   font-size: 16px;
 }
+/* =====================================
+   MOBILE NAVBAR FIX — SAFE (NO DESKTOP CHANGE)
+===================================== */
+@media (max-width: 768px) {
+
+  /* Keep navbar in one row */
+  .shop-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  /* Brand stays left */
+  .shop-navbar .brand {
+    flex-shrink: 0;
+  }
+
+  /* Nav links move to right */
+  .shop-navbar .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto; /* 🔥 KEY FIX */
+    flex-shrink: 0;
+  }
+
+  /* Hide cart text, keep icon + badge */
+  .shop-navbar .cart-text {
+    display: none;
+  }
+
+  /* Keep cart icon aligned */
+  .shop-navbar .cart-link {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Prevent badge overflow */
+  .shop-navbar .cart-badge {
+    top: -6px;
+    right: -8px;
+  }
+}
