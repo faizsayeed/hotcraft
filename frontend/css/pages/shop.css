@@ -1,5 +1,5 @@
 /* =====================================================
-   SHOP PAGE — FULL ORIGINAL VERSION + MOBILE GRID FIX
+   SHOP PAGE — FULL ORIGINAL VERSION + GLOBAL TEXT FIX
 ===================================================== */
 
 .shop-navbar {
@@ -77,11 +77,11 @@
 
 .cart-badge {
   position: absolute;
-  top: -6px;
+  top: -10px;
   right: -10px;
   background: #111;
   color: #fff;
-  font-size: 11px;
+  font-size: 10px;
   padding: 2px 6px;
   border-radius: 999px;
   font-weight: 600;
@@ -142,12 +142,13 @@
   border-radius: 14px;
 }
 
+/* --- 🎯 DESKTOP TEXT SIZE ADJUSTMENT --- */
 .product-info {
-  padding: 16px 18px 20px;
+  padding: 12px 14px 18px;
 }
 
 .product-info h3 {
-  font-size: 18px;
+  font-size: 14px; /* Reduced from 18px */
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -155,20 +156,20 @@
 }
 
 .product-info p {
-  font-size: 13px;
+  font-size: 11px; /* Reduced from 13px */
   font-weight: 500;
   color: #aaa;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .price {
-  font-size: 19px;
+  font-size: 15px; /* Reduced from 19px */
   font-weight: 900;
   letter-spacing: 0.08em;
 }
 
 /* =====================================
-   MOBILE FIXES (GRID, BANNER & NAVBAR)
+   MOBILE FIXES (GRID, BANNER, NAVBAR & TEXT)
 ===================================== */
 @media (max-width: 768px) {
   .shop-navbar {
@@ -204,31 +205,40 @@
     background-position: center;
   }
 
-  /* --- 🎯 2 PRODUCTS PER ROW FIX --- */
+  /* 2 PRODUCTS PER ROW */
   .product-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
-    gap: 12px; /* Smaller gap so they fit well */
-    padding: 0 4px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 2px;
   }
 
   .image-wrap {
-    padding: 8px; /* Less padding inside the card for mobile */
+    padding: 8px; 
   }
 
   .product-info {
-    padding: 10px 10px 15px; /* Tighter info section */
+    padding: 8px 8px 12px; 
   }
 
+  /* --- 🎯 MOBILE TEXT SIZES --- */
   .product-info h3 {
-    font-size: 14px; /* Smaller title to avoid overlapping */
-  }
-
-  .price {
-    font-size: 15px; /* Smaller price */
+    font-size: 8px; 
+    letter-spacing: 0.05em; 
+    line-height: 1.2;
+    overflow-wrap: break-word; 
+    margin-bottom: 4px;
   }
 
   .product-info p {
-    font-size: 11px; /* Smaller category text */
-    margin-bottom: 8px;
+    font-size: 8px; 
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }
+
+  .price {
+    font-size: 10px; 
+    letter-spacing: 0.02em;
   }
 }
