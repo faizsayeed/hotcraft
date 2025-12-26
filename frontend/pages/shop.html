@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Shop — Hotcraft</title>
 
-  <!-- Styles -->
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/pages/shop.css">
 
-  <!-- API config -->
   <script src="../js/config.js"></script>
-  <!-- ✅ CART UTILS MUST COME BEFORE SHOP -->
-<script src="../js/cart-utils.js"></script>
-
-  <!-- Shop logic (DO NOT TOUCH) -->
+  <script src="../js/cart-utils.js"></script>
   <script src="../js/shop.js" defer></script>
 </head>
 
 <body>
   <div class="container">
 
-    <!-- NAVBAR -->
     <nav class="navbar shop-navbar">
       <div class="brand">
         <span class="brand-mark">▣</span>
@@ -30,13 +23,13 @@
       </div>
 
       <div class="nav-links">
-        <a href="shop.html">Shop</a>
-        <a href="about.html">About</a>
-        <a href="custom.html">Custom</a>
+        <a href="shop.html" class="nav-item">Shop</a>
+        <a href="about.html" class="nav-item">About</a>
+        <a href="custom.html" class="nav-item">Custom</a>
 
         <a href="cart.html" class="cart-link">
           <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 6h15l-1.5 9h-12z"></path>
+            <path d="M6 6h15l-1.5 9h-12z" stroke="currentColor" fill="none" stroke-width="2"></path>
             <circle cx="9" cy="21" r="1.5"></circle>
             <circle cx="18" cy="21" r="1.5"></circle>
           </svg>
@@ -46,11 +39,8 @@
       </div>
     </nav>
     
-    <!-- ✅ ONLY ONE BANNER -->
     <section class="shop-banner"></section>
-    
 
-    <!-- ✅ PRODUCT GRID (LOGIC REQUIRED) -->
     <section class="shop-wrapper">
       <div class="product-grid" id="productGrid"></div>
     </section>
