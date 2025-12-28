@@ -2,24 +2,26 @@
    PRODUCT PAGE — PREMIUM DARK UI (MATCHES SHOP)
 ===================================================== */
 
-/* =========================
-   GLOBAL TEXT RULE
-========================= */
+/* GLOBAL FIX: Prevents elements from breaking layout width */
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #050505; /* Deep black to match shop */
+  background-color: #050505; 
   color: #ffffff;
   text-transform: uppercase;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
   letter-spacing: 0.4px;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* -------------------------------
-   NAVBAR (EXACT MATCH TO SHOP)
+   NAVBAR (FIXED FOR MOBILE)
 -------------------------------- */
 
 .shop-navbar {
@@ -31,6 +33,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%; /* Ensures it stays within screen bounds */
   z-index: 1000;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(20px);
@@ -41,6 +44,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .brand-mark {
@@ -90,6 +94,12 @@ body {
   width: 100%;
 }
 
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .cart-icon {
   width: 20px;
   height: 20px;
@@ -126,7 +136,6 @@ body {
   margin: 120px auto 60px;
   padding: 0 50px;
   max-width: 1300px;
-  /* Entrance Animation */
   animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -140,9 +149,9 @@ body {
 ========================= */
 
 .product-gallery {
-  background: #0f0f0f; /* Lighter black for depth */
+  background: #0f0f0f;
   padding: 40px;
-  border-radius: 4px; /* Harder edges for premium look */
+  border-radius: 4px;
   border: 1px solid #1a1a1a;
   display: flex;
   align-items: center;
@@ -188,7 +197,7 @@ body {
 .stock {
   font-size: 11px;
   font-weight: 700;
-  color: #00ff66; /* Neon green for dark mode */
+  color: #00ff66;
   margin-bottom: 20px;
   letter-spacing: 1px;
 }
@@ -199,7 +208,7 @@ body {
   font-weight: 400;
   color: #888;
   margin-bottom: 35px;
-  text-transform: none; /* Descriptions look better in normal case */
+  text-transform: none;
 }
 
 /* =========================
@@ -267,7 +276,7 @@ body {
 }
 
 /* =========================
-   SIMILAR PRODUCTS (MATCH SHOP GRID)
+   SIMILAR PRODUCTS
 ========================= */
 
 .similar-products {
@@ -288,7 +297,7 @@ body {
 .similar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 5px; /* Matching your shop grid gap */
+  gap: 5px;
 }
 
 .similar-card {
@@ -334,18 +343,22 @@ body {
 }
 
 /* =========================
-   MOBILE RESPONSIVE
+   MOBILE RESPONSIVE FIX
 ========================= */
 
 @media (max-width: 900px) {
+  .shop-navbar {
+    padding: 15px 25px; /* Reduced padding prevents overflow */
+  }
+
   .product-layout {
     grid-template-columns: 1fr;
     padding: 0 20px;
     margin-top: 100px;
   }
   
-  .shop-navbar {
-    padding: 15px 20px;
+  .similar-products {
+    padding: 0 20px;
   }
 
   .similar-grid {
@@ -354,7 +367,20 @@ body {
 }
 
 @media (max-width: 600px) {
-  .brand-name { display: none; }
+  .brand-name { display: none; } /* Show icon only to save space */
+  
+  .shop-navbar .nav-links {
+    gap: 15px; /* Tighter gap for small screens */
+  }
+
+  .shop-navbar .nav-links a {
+    font-size: 11px;
+  }
+
   .similar-grid { grid-template-columns: repeat(2, 1fr); }
   .btn { font-size: 11px; }
+
+  .cart-badge {
+    right: -8px; /* Pulled in slightly for mobile */
+  }
 }
