@@ -46,5 +46,44 @@
     </section>
 
   </div>
+
+  <script>
+    /**
+     * PRESERVED FEATURES + SCROLL ANIMATION LOGIC
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Navbar Scroll Interaction
+        const navbar = document.querySelector('.shop-navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Intersection Observer for Scroll Reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // 3. Check for products every 100ms (Ensures we don't miss dynamic cards)
+        const checkProductsExist = setInterval(() => {
+            const cards = document.querySelectorAll('.product-card');
+            if (cards.length > 0) {
+                cards.forEach(card => revealObserver.observe(card));
+                clearInterval(checkProductsExist);
+            }
+        }, 100);
+    });
+  </script>
 </body>
 </html>
