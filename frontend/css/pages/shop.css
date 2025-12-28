@@ -186,14 +186,14 @@ body {
     margin: 0 0 5px 0;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: #888;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: color 0.3s ease;
 }
 
-.product-card:hover .product-info h3 { color: #fff; }
+.product-card:hover .product-info h3 { color: #ffffff; }
 
 .product-info p {
     font-size: 9px; 
