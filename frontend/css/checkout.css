@@ -1,61 +1,164 @@
+/* =====================================================
+   CHECKOUT PAGE — PREMIUM DARK (FIXED)
+===================================================== */
+
+/* 1. GLOBAL RESET */
+html { background-color: #050505; }
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #050505;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* 2. NAVBAR (EXACT COPY FROM PRODUCT.CSS) */
+.shop-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { font-size: 24px; font-weight: 900; }
+.brand-name { font-size: 16px; font-weight: 700; letter-spacing: 2px; }
+
+.nav-links { display: flex; gap: 25px; align-items: center; }
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    opacity: 0.6;
+    position: relative;
+}
+
+.cart-link { display: flex; align-items: center; gap: 8px; position: relative; }
+.cart-icon { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: #fff;
+    color: #000;
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 50%;
+}
+
+/* 3. LAYOUT */
 .checkout-container {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 40px;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 32px;
+    max-width: 1200px;
+    margin: 140px auto 60px; /* Pushes content below navbar */
+    padding: 0 50px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 50px;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ADDRESS */
-.address {
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid #e5e5e5;
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.address h2 {
-  margin-bottom: 16px;
+/* 4. ADDRESS SECTION (INPUTS) */
+.address-section h2 { font-size: 18px; margin-bottom: 30px; letter-spacing: 2px; }
+
+.input-group input, 
+.input-group textarea {
+    width: 100%;
+    padding: 16px;
+    background: #000;
+    border: 1px solid #222;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    box-sizing: border-box; /* Fixes padding overflow */
 }
 
-.address input,
-.address textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+.input-group input:focus, 
+.input-group textarea:focus {
+    outline: none;
+    border-color: #fff;
 }
 
-/* SUMMARY */
-.summary {
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid #e5e5e5;
-  height: fit-content;
+.input-group textarea { height: 100px; resize: none; }
+
+/* 5. SUMMARY SECTION */
+.summary-section {
+    background: #0f0f0f;
+    padding: 30px;
+    border: 1px solid #1a1a1a;
+    height: fit-content;
+    position: sticky;
+    top: 140px;
 }
 
-.summary h2 {
-  margin-bottom: 16px;
-}
+.summary-section h2 { font-size: 14px; color: #444; margin-bottom: 25px; }
 
 #orderItems p {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 12px;
+    color: #888;
 }
 
+.total-box {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+/* 6. PLACE ORDER BUTTON */
 #placeOrderBtn {
-  width: 100%;
-  margin-top: 16px;
-  padding: 14px;
-  background: #111;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
+    width: 100%;
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    font-weight: 900;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#placeOrderBtn:hover {
+    background: #e0e0e0;
+    transform: translateY(-3px);
+}
+
+/* 7. RESPONSIVE */
+@media (max-width: 900px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+        margin-top: 100px;
+    }
+    .shop-navbar { padding: 15px 20px; }
+    .brand-name { display: none; }
+    .summary-section { position: relative; top: 0; }
 }

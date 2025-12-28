@@ -2,28 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Cart — Hotcraft</title>
-
-  <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/cart.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <h1>Hotcraft</h1>
+<nav class="shop-navbar">
+  <div class="brand">
+    <span class="brand-mark">▣</span>
+    <span class="brand-name">HOTCRAFT</span>
+  </div>
+
   <div class="nav-links">
     <a href="./shop.html">Shop</a>
-    <a href="./cart.html">
-      Cart (<span id="cartCount">0</span>)
+    <a href="./cart.html" class="cart-link">
+      <svg class="cart-icon" viewBox="0 0 24 24">
+        <path d="M6 6h15l-1.5 9h-12z" stroke="currentColor" fill="none" stroke-width="2"></path>
+        <circle cx="9" cy="21" r="1.5"></circle>
+        <circle cx="18" cy="21" r="1.5"></circle>
+      </svg>
+      <span class="cart-text">CART</span>
+      <span class="cart-badge" id="cartCount">0</span>
     </a>
   </div>
 </nav>
 
 <div class="cart-page">
-
   <section class="cart-left">
     <h2>Your Cart</h2>
-    <div id="cartContainer"></div>
+    <div id="cartContainer">
+        </div>
   </section>
 
   <aside class="cart-right">
@@ -39,22 +48,17 @@
       <span>Free</span>
     </div>
 
-    <hr>
-
     <div class="summary-total">
       <span>Total</span>
       <span>₹<span id="cartTotalFinal">0</span></span>
     </div>
 
     <button class="checkout-btn" onclick="location.href='./checkout.html'">
-  Proceed to Checkout
-</button>
-
+      Proceed to Checkout
+    </button>
   </aside>
-
 </div>
 
-<!-- ✅ SCRIPTS (ORDER MATTERS) -->
 <script src="../js/config.js"></script>
 <script src="../js/cart-utils.js"></script>
 <script src="../js/cart.js"></script>

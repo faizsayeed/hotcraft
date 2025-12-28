@@ -2,49 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout — Hotcraft</title>
-
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/cart.css">
   <link rel="stylesheet" href="../css/checkout.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <h1>Hotcraft</h1>
+<nav class="shop-navbar">
+  <div class="brand">
+    <span class="brand-mark">▣</span>
+    <span class="brand-name">HOTCRAFT</span>
+  </div>
+
   <div class="nav-links">
     <a href="./shop.html">Shop</a>
-    <a href="./cart.html">
-      Cart (<span id="cartCount">0</span>)
+    <a href="./cart.html" class="cart-link">
+      <svg class="cart-icon" viewBox="0 0 24 24">
+        <path d="M6 6h15l-1.5 9h-12z" stroke="currentColor" fill="none" stroke-width="2"></path>
+        <circle cx="9" cy="21" r="1.5"></circle>
+        <circle cx="18" cy="21" r="1.5"></circle>
+      </svg>
+      <span class="cart-text">CART</span>
+      <span class="cart-badge" id="cartCount">0</span>
     </a>
   </div>
 </nav>
 
 <div class="checkout-container">
-
-  <!-- ADDRESS -->
-  <section class="address">
+  <section class="address-section">
     <h2>Shipping Address</h2>
-
-    <input id="name" placeholder="Full Name">
-    <input id="phone" placeholder="Phone Number">
-    <textarea id="address" placeholder="Full Address"></textarea>
-    <input id="pincode" placeholder="Pincode">
+    <div class="input-group">
+        <input id="name" placeholder="FULL NAME">
+        <input id="phone" placeholder="PHONE NUMBER">
+        <textarea id="address" placeholder="FULL ADDRESS"></textarea>
+        <input id="pincode" placeholder="PINCODE">
+    </div>
   </section>
 
-  <!-- ORDER SUMMARY -->
-  <section class="summary">
+  <aside class="summary-section">
     <h2>Order Summary</h2>
-    <div id="orderItems"></div>
+    <div id="orderItems">
+        </div>
 
-    <h3>Total: ₹<span id="orderTotal">0</span></h3>
+    <div class="total-box">
+        <span>TOTAL AMOUNT</span>
+        <span>₹<span id="orderTotal">0</span></span>
+    </div>
 
-    <button id="placeOrderBtn">Place Order</button>
-  </section>
-
+    <button id="placeOrderBtn">PLACE ORDER</button>
+  </aside>
 </div>
 
-<!-- ✅ SCRIPT ORDER IS CRITICAL -->
 <script src="../js/config.js"></script>
 <script src="../js/cart-utils.js"></script>
 <script src="../js/checkout.js"></script>

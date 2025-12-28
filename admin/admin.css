@@ -1,290 +1,192 @@
-/* =========================
-   GLOBAL
-========================= */
+/* =====================================================
+   ADMIN PANEL — PREMIUM DARK UI (COMPLETE)
+===================================================== */
 
-* {
-  box-sizing: border-box;
-}
+html { background-color: #050505; scroll-behavior: smooth; }
 
 body {
-  font-family: "Inter", system-ui, sans-serif;
-  background: #f5f6f8;
-  color: #111;
-  margin: 0;
-  padding: 32px;
+    margin: 0;
+    padding: 0;
+    background-color: #050505;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 24px;
+/* 1. HEADER */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 50px;
+    border-bottom: 1px solid #1a1a1a;
+    background: #000;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-h2 {
-  font-size: 20px;
-  margin-bottom: 16px;
+.brand { display: flex; align-items: center; gap: 15px; }
+.brand-mark { font-size: 24px; font-weight: 900; }
+.brand h1 { font-size: 14px; margin: 0; letter-spacing: 3px; }
+
+.admin-nav { display: flex; gap: 15px; }
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: #888;
+    padding: 10px 20px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  background: #111;
-  color: #fff;
-  padding: 10px 18px;
-  transition: all 0.25s ease;
+.nav-btn.active, .nav-btn:hover { border-color: #fff; color: #fff; background: #111; }
+
+.logout-btn {
+    background: #ff4d4d;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 10px;
+    font-weight: 900;
+    cursor: pointer;
 }
 
-button:hover {
-  background: #000;
-  transform: translateY(-1px);
+/* 2. LAYOUT */
+.admin-content {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 50px;
 }
 
-button:active {
-  transform: translateY(0);
+#productsSection {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 40px;
 }
 
-/* =========================
-   ADMIN NAV BAR
-========================= */
-
-.admin-nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
+/* 3. CARDS & FORMS */
+.add-card, .list-card {
+    background: #0f0f0f;
+    border: 1px solid #1a1a1a;
+    padding: 30px;
+    height: fit-content;
 }
 
-.admin-nav button {
-  background: #fff;
-  color: #111;
-  border: 1px solid #ddd;
+h2 { font-size: 11px; color: #444; margin-bottom: 25px; letter-spacing: 2px; }
+
+.input-row { display: flex; gap: 15px; margin-bottom: 15px; }
+.input-container { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.input-container label { font-size: 9px; color: #555; letter-spacing: 1px; }
+
+input, textarea {
+    width: 100%;
+    background: #000;
+    border: 1px solid #222;
+    color: #fff;
+    padding: 15px;
+    font-size: 12px;
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
-.admin-nav button:hover {
-  background: #111;
-  color: #fff;
+textarea { height: 100px; resize: none; margin-bottom: 15px; }
+
+/* 4. CUSTOM UPLOAD */
+.custom-file-upload { margin-bottom: 20px; }
+.upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #000;
+    border: 1px dashed #333;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.3s;
 }
+.upload-label:hover { border-color: #fff; background: #0a0a0a; }
+.upload-icon { width: 18px; height: 18px; color: #888; }
+.upload-label span { font-size: 10px; color: #fff; }
+#images { display: none; }
 
-/* =========================
-   SECTIONS
-========================= */
-
-#productsSection,
-#ordersSection {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 32px;
-  align-items: flex-start;
+.action-btn {
+    width: 100%;
+    padding: 18px;
+    background: #fff;
+    color: #000;
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
 }
+.action-btn:hover { background: #00ff66; transform: translateY(-2px); }
 
-/* =========================
-   ADD PRODUCT CARD
-========================= */
-
-.add {
-  background: #fff;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-}
-
-.add input,
-.add textarea {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-}
-
-.add textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.add input[type="file"] {
-  padding: 8px;
-}
-
-.add button {
-  width: 100%;
-  margin-top: 8px;
-}
-
-/* =========================
-   PRODUCT LIST
-========================= */
-
-.list {
-  background: #fff;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-}
-
-#productList {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
+/* 5. INVENTORY LIST & STEPPER */
 .product {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 16px;
-  align-items: center;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #eee;
-  transition: all 0.25s ease;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background: #000;
+    border: 1px solid #1a1a1a;
+    margin-bottom: 10px;
 }
 
-.product:hover {
-  background: #f9fafb;
-  transform: translateY(-2px);
+.product-info strong { font-size: 12px; color: #fff; display: block; }
+.low-alert { color: #ff4d4d; font-size: 9px; margin-top: 4px; }
+
+.stock-stepper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #0f0f0f;
+    padding: 5px 12px;
 }
 
-.product strong {
-  display: block;
-  font-size: 15px;
-  margin-bottom: 4px;
+.stock-value { font-size: 14px; font-weight: 900; min-width: 25px; text-align: center; }
+
+.arrow-controls { display: flex; flex-direction: column; gap: 2px; }
+.arrow-btn {
+    background: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 9px;
+    padding: 2px;
 }
+.arrow-btn:hover { color: #fff; }
 
-.product input {
-  width: 70px;
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #444;
+    font-size: 9px;
+    font-weight: 900;
+    cursor: pointer;
+    padding: 10px;
 }
+.delete-btn:hover { color: #ff4d4d; }
 
-.product button {
-  background: #e11d48;
-  padding: 8px 12px;
-  font-size: 13px;
-}
-
-.product button:hover {
-  background: #be123c;
-}
-
-.low {
-  color: #dc2626;
-  font-weight: 600;
-  margin-left: 6px;
-}
-
-/* =========================
-   ORDERS SECTION
-========================= */
-
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.filters button {
-  background: #fff;
-  border: 1px solid #ddd;
-  color: #111;
-}
-
-.filters button:hover {
-  background: #111;
-  color: #fff;
-}
-
-#ordersList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 18px;
-}
-
-.order-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #eee;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-  transition: transform 0.25s ease;
-}
-
-.order-card:hover {
-  transform: translateY(-4px);
-}
-
-.order-card h3 {
-  margin-bottom: 6px;
-}
-
-.order-card p {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.order-card ul {
-  padding-left: 18px;
-  margin: 10px 0;
-}
-
-.order-card select {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 900px) {
-  #productsSection,
-  #ordersSection {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================
-   TOAST NOTIFICATIONS
-========================= */
-
-/* =========================
-   TOAST NOTIFICATIONS
-========================= */
-
-#toast-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* 6. TOASTS */
+#toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
 .toast {
-  min-width: 240px;
-  padding: 14px 18px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: slideIn 0.4s ease, fadeOut 0.4s ease 3s forwards;
+    background: #111;
+    border-left: 4px solid #fff;
+    color: #fff;
+    padding: 15px 25px;
+    font-size: 11px;
+    min-width: 200px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: slideIn 0.3s ease forwards;
 }
+.toast.success { border-left-color: #00ff66; }
+.toast.error { border-left-color: #ff4d4d; }
 
-.toast.success { background: #16a34a; }
-.toast.error   { background: #dc2626; }
-.toast.info    { background: #2563eb; }
-
-@keyframes slideIn {
-  from { transform: translateX(40px); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes fadeOut {
-  to { opacity: 0; transform: translateX(40px); }
-}
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
