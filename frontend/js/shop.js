@@ -1,4 +1,35 @@
+// 1. Navbar Scroll Effect
+    const navbar = document.querySelector('.shop-navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
 
+    // 2. Scroll Reveal Animation for Product Cards
+    const observerOptions = {
+        threshold: 0.1, // Trigger when 10% of the card is visible
+        rootMargin: '0px 0px -50px 0px' // Slight offset so it feels more natural
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add a slight stagger delay based on the index if you want
+                // entry.target.style.transitionDelay = `${(index % 4) * 0.1}s`; 
+                entry.target.classList.add('reveal');
+                // Stop observing once revealed (optional)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Apply observer to all product cards
+    document.querySelectorAll('.product-card').forEach(card => {
+        observer.observe(card);
+    });
 
 fetch(`${API}/products`)
   .then(res => res.json())
