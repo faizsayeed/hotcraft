@@ -1,92 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotcraft Admin — Control</title>
+  <title>Hotcraft Admin</title>
   <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
 
-<div class="admin-wrapper">
-  <header class="admin-header">
-    <div class="brand">
-      <span class="brand-mark">▣</span>
-      <h1>HOTCRAFT ADMIN</h1>
-    </div>
-    <div class="admin-nav">
-      <button class="nav-btn active" id="btnProducts" onclick="showProducts()">PRODUCTS</button>
-      <button class="nav-btn" id="btnOrders" onclick="showOrders()">ORDERS</button>
-      <button class="logout-btn" onclick="logoutAdmin()">LOGOUT</button>
-    </div>
-  </header>
+<h1>Hotcraft Admin Panel</h1>
 
-  <main class="admin-content">
-    <div id="productsSection">
-      <section class="add-card">
-        <h2>UPLOAD NEW PRODUCT</h2>
-        <div class="form-group">
-          <input id="name" placeholder="PRODUCT NAME">
-          
-          <div class="input-row">
-            <div class="input-container">
-              <label>PRICE (₹)</label>
-              <input id="price" type="number" placeholder="0.00">
-            </div>
-            <div class="input-container">
-              <label>STOCK QTY</label>
-              <input id="stock" type="number" placeholder="0">
-            </div>
-          </div>
-
-          <textarea id="description" placeholder="PRODUCT DESCRIPTION"></textarea>
-
-          <div class="custom-file-upload">
-            <label for="images" class="upload-label">
-              <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
-              </svg>
-              <span>UPLOAD IMAGES</span>
-            </label>
-            <input type="file" id="images" multiple accept="image/*">
-          </div>
-
-          <button class="action-btn" onclick="addProduct()">UPLOAD PRODUCT</button>
-        </div>
-      </section>
-
-      <section class="list-card">
-        <h2>INVENTORY</h2>
-        <div id="productList"></div>
-      </section>
-    </div>
-
-    <div id="ordersSection" style="display:none;">
-      <div class="section-header">
-        <h2>ORDER MANAGEMENT</h2>
-        <div class="filters">
-          <button onclick="filterOrders('PLACED')">PENDING</button>
-          <button onclick="filterOrders('PROCESSING')">PROCESSING</button>
-          <button onclick="filterOrders('COMPLETED')">COMPLETED</button>
-        </div>
-      </div>
-      <div id="ordersList"></div>
-    </div>
-  </main>
+<div class="admin-nav">
+  <button onclick="showProducts()">Products</button>
+  <button onclick="showOrders()">Orders</button>
+  <button onclick="logoutAdmin()" style="margin-left:auto;">Logout</button>
 </div>
 
-<div id="toast-container"></div>
+<div id="productsSection">
 
+  <section class="add">
+    <h2>Add Product</h2>
+
+    <input id="name" placeholder="Product name">
+    <input id="price" type="number" placeholder="Price">
+    <input id="stock" type="number" placeholder="Stock">
+    <textarea id="description" placeholder="Description"></textarea>
+    <input type="file" id="images" multiple accept="image/*">
+
+    <button onclick="addProduct()">Add Product</button>
+  </section>
+
+  <section class="list">
+    <h2>Products</h2>
+    <div id="productList"></div>
+  </section>
+
+</div>
+
+<div id="ordersSection" style="display:none;">
+  <h2>Orders</h2>
+
+  <div class="filters">
+    <button onclick="filterOrders('PLACED')">Pending</button>
+    <button onclick="filterOrders('PROCESSING')">Processing</button>
+    <button onclick="filterOrders('COMPLETED')">Completed</button>
+  </div>
+
+  <div id="ordersList"></div>
+</div>
+
+<!-- 🔐 AUTH CHECK -->
 <script>
   const token = localStorage.getItem("token");
-  if (!token) window.location.href = "login.html";
+  if (!token) {
+    window.location.href = "login.html";
+  }
 
   function logoutAdmin() {
     localStorage.removeItem("token");
     window.location.href = "login.html";
   }
 </script>
+
+<!-- ✅ ORDER MATTERS -->
 <script src="../frontend/js/config.js"></script>
 <script src="admin.js"></script>
+
+<div id="toast-container"></div>
+
 </body>
 </html>
