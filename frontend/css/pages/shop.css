@@ -197,12 +197,12 @@ body {
 
 .product-info p {
     font-size: 9px; 
-    color: #444;
+    color: #ffffff;
     margin: 0 0 8px 0;
     transition: color 0.3s ease;
 }
 
-.product-card:hover .product-info p { color: #666; }
+.product-card:hover .product-info p { color: #ffffff; }
 
 .price {
     font-size: 13px;
