@@ -17,3 +17,4 @@ def create_table():
 
     db.commit()
     cursor.close()
+    db.close()
