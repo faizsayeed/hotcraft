@@ -16,18 +16,16 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 def register():
     data = request.json
 
-    name = data.get("name")
     email = data.get("email")
     password = data.get("password")
 
-    if not name or not email or not password:
+    if not email or not password:
         return jsonify({"error": "All fields required"}), 400
 
     try:
-        # adjust args if your create_user uses (email, password, is_admin)
         create_user(email, password, is_admin=False)
     except Exception:
-        return jsonify({"error": "Email already exists"}), 409
+        return jsonify({"error": "User already exists"}), 409
 
     return jsonify({"message": "User registered successfully"}), 201
 
@@ -45,6 +43,7 @@ def login():
     if not email or not password:
         return jsonify({"error": "Email & password required"}), 400
 
+    # username == email in your system
     user = verify_user(email, password)
 
     if not user:
@@ -53,7 +52,7 @@ def login():
     token = jwt.encode(
         {
             "id": user["id"],
-            "email": user["email"],
+            "username": user["username"],
             "is_admin": user["is_admin"],
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
         },
@@ -65,7 +64,7 @@ def login():
         "token": token,
         "user": {
             "id": user["id"],
-            "email": user["email"],
+            "username": user["username"],
             "is_admin": user["is_admin"]
         }
     })
