@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from utils.auth import token_required, admin_required
 
 # ------------------------------------------------
-# PATH CONFIG (FIXED)
+# PATH CONFIG
 # ------------------------------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -59,8 +59,7 @@ def add_product():
         if file and allowed_file(file.filename):
             ext = file.filename.rsplit(".", 1)[1].lower()
             filename = f"product_{product_id}_{idx}.{ext}"
-            filepath = os.path.join(UPLOAD_FOLDER, filename)
-            file.save(filepath)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
             saved_images.append(filename)
 
     cursor.execute(
@@ -70,12 +69,13 @@ def add_product():
 
     db.commit()
     cursor.close()
+    db.close()
 
     return jsonify({"message": "Product added with images"}), 201
 
 
 # ------------------------------------------------
-# PUBLIC PRODUCTS (SHOP)
+# PUBLIC PRODUCTS (SHOP)  🚫 CACHE DISABLED
 # ------------------------------------------------
 @admin.route("/products", methods=["GET"])
 def get_products():
@@ -84,8 +84,9 @@ def get_products():
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()
     cursor.close()
+    db.close()
 
-    return jsonify([
+    response = jsonify([
         {
             "id": p["id"],
             "name": p["name"],
@@ -97,9 +98,15 @@ def get_products():
         for p in products
     ])
 
+    # 🔥 CRITICAL: Disable Cloudflare caching
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+
+    return response
+
 
 # ------------------------------------------------
-# SINGLE PRODUCT (PUBLIC)
+# SINGLE PRODUCT (PUBLIC) 🚫 CACHE DISABLED
 # ------------------------------------------------
 @admin.route("/products/<int:product_id>", methods=["GET"])
 def get_product(product_id):
@@ -111,11 +118,12 @@ def get_product(product_id):
     )
     p = cursor.fetchone()
     cursor.close()
+    db.close()
 
     if not p:
         return jsonify({"error": "Product not found"}), 404
 
-    return jsonify({
+    response = jsonify({
         "id": p["id"],
         "name": p["name"],
         "price": p["price"],
@@ -123,6 +131,12 @@ def get_product(product_id):
         "stock": p["stock"],
         "images": json.loads(p["images"]) if p["images"] else []
     })
+
+    # 🔥 CRITICAL: Disable Cloudflare caching
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+
+    return response
 
 
 # ------------------------------------------------
@@ -137,6 +151,7 @@ def admin_get_products():
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()
     cursor.close()
+    db.close()
 
     return jsonify([
         {
@@ -168,8 +183,7 @@ def delete_product(pid):
 
     if product and product["images"]:
         try:
-            images = json.loads(product["images"])
-            for img in images:
+            for img in json.loads(product["images"]):
                 img_path = os.path.join(UPLOAD_FOLDER, img)
                 if os.path.exists(img_path):
                     os.remove(img_path)
@@ -179,6 +193,7 @@ def delete_product(pid):
     cursor.execute("DELETE FROM products WHERE id = %s", (pid,))
     db.commit()
     cursor.close()
+    db.close()
 
     return jsonify({"message": "Product and images deleted"})
 
@@ -205,6 +220,7 @@ def update_product(pid):
 
     db.commit()
     cursor.close()
+    db.close()
 
     return jsonify({"message": "Product updated"})
 
@@ -218,11 +234,10 @@ def update_product(pid):
 def get_orders():
     db = get_db()
     cursor = db.cursor()
-    cursor.execute(
-        "SELECT * FROM orders ORDER BY created_at DESC"
-    )
+    cursor.execute("SELECT * FROM orders ORDER BY created_at DESC")
     orders = cursor.fetchall()
     cursor.close()
+    db.close()
 
     return jsonify([
         {

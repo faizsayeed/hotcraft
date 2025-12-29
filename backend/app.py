@@ -52,16 +52,17 @@ def home():
     return "Hotcraft backend is running"
 
 # -----------------------------
-# App start
+# Database initialization
+# Runs ONCE when container starts
 # -----------------------------
-if __name__ == "__main__":
+def init_db():
     db = get_db()
+    try:
+        create_table()          # products
+        create_orders_table(db) # orders
+        create_users_table(db)  # users
+    finally:
+        db.close()
 
-    # Create tables safely
-    create_table()                 # products
-    create_orders_table(db)        # orders
-    create_users_table(db)         # users (auth)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
-
+# Call DB init at import time (Gunicorn-safe)
+init_db()

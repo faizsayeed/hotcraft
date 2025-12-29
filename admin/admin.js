@@ -1,6 +1,8 @@
 /* =======================
    AUTH HELPER
 ======================= */
+const API = "https://hotcraft-backend.onrender.com/";
+
 function getAuthHeaders(isJson = false) {
   const token = localStorage.getItem("token");
   if (!token) {
