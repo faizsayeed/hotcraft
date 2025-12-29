@@ -48,7 +48,8 @@ def login():
         return jsonify({"error": "Email & password required"}), 400
 
     db = get_db()
-    user = verify_user(db, email, password)
+    user = verify_user(email, password)
+
 
     if not user:
         return jsonify({"error": "Invalid credentials"}), 401
