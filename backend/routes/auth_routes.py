@@ -74,3 +74,16 @@ def login():
             "role": user["role"]
         }
     })
+@auth.route("/auth/create-admin", methods=["POST"])
+def create_admin():
+    data = request.json
+    username = data.get("email")
+    password = data.get("password")
+
+    if not username or not password:
+        return jsonify({"error": "Missing credentials"}), 400
+
+    from models.user import create_user
+    create_user(username, password, is_admin=True)
+
+    return jsonify({"message": "Admin created"}), 201
