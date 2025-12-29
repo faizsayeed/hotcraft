@@ -1,10 +1,25 @@
-import sqlite3
 import os
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, "database.db")
+# ------------------------------------------------
+# PostgreSQL connection (Render compatible)
+# ------------------------------------------------
+DATABASE_URL = os.getenv("postgresql://hotcraft_db_user:ylrXYdrgqbKXr8PBSiDViFM0j7iGZJ0L@dpg-d594qcbuibrs73b2ulj0-a/hotcraft_db")
+
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL environment variable not set")
 
 def get_db():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
+    """
+    Returns a PostgreSQL connection.
+    Compatible with existing sqlite-style usage:
+    - db.execute(...)
+    - db.commit()
+    - fetchone(), fetchall()
+    """
+    conn = psycopg2.connect(
+        DATABASE_URL,
+        cursor_factory=RealDictCursor
+    )
     return conn

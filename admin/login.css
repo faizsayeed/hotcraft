@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css?family=Dancing+Script|Roboto");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #000000;
+}
+
+body {
+  background: #000000;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ================= PANDA ================= */
+
+.panda {
+  position: relative;
+  width: 200px;
+  margin: 40px auto;
+}
+
+.face {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border-radius: 50%;
+  margin: 50px auto;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 50;
+}
+
+.ear {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #000;
+  border: 10px solid #fff;
+  border-radius: 50%;
+  top: -15px;
+  left: -15px;
+}
+
+.ear::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #000;
+  border: 10px solid #fff;
+  border-radius: 50%;
+  top: -10px;
+  left: 125px;
+}
+
+.eye-shade {
+  background: #000;
+  width: 50px;
+  height: 80px;
+  position: absolute;
+  top: 35px;
+  left: 25px;
+  border-radius: 25px 20px 30px 40px;
+  transform: rotate(220deg);
+}
+
+.eye-shade.rgt {
+  transform: rotate(140deg);
+  left: 105px;
+}
+
+.eye-white {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-radius: 50%;
+  top: 80px;
+  left: 40px;
+  overflow: hidden;
+  z-index: 500;
+}
+
+.eye-white.rgt {
+  left: auto;
+  right: 40px;
+}
+
+.eye-ball {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #000;
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+  transition: 0.1s;
+}
+
+.nose {
+  position: absolute;
+  width: 35px;
+  height: 20px;
+  background: #000;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 50px 20px;
+  transform: rotate(15deg);
+}
+
+/* ================= BODY ================= */
+
+.body {
+  position: absolute;
+  width: 250px;
+  height: 280px;
+  background: #fff;
+  top: 200px;
+  left: -25px;
+  border-radius: 100px 100px 100px 100px / 120px 120px 100px 100px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= FORM ================= */
+
+form {
+  width: 380px;
+  padding: 20px 40px;
+  background: #fff;
+  margin: auto;
+  position: relative;
+  transform: translateY(-120px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eee;
+  z-index: 500;
+}
+
+h1 {
+  color: var(--primary);
+  font-family: "Dancing Script", cursive;
+}
+
+.form-group {
+  position: relative;
+  margin-top: 30px;
+}
+
+.form-control {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #777;
+  padding: 8px 0;
+  background: none;
+  outline: none;
+  font-size: 15px;
+}
+
+.form-label {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: #777;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.form-control:focus + .form-label,
+.form-control:valid + .form-label {
+  top: -10px;
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.btn {
+  width: 150px;
+  height: 35px;
+  margin-top: 30px;
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #938f90;
+}
+
+/* ================= ERROR ================= */
+
+.alert {
+  display: none;
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.wrong-entry .alert {
+  display: block;
+}

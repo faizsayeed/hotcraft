@@ -42,15 +42,18 @@ def add_product():
     saved_images = []
 
     db = get_db()
+    cursor = db.cursor()
 
-    cursor = db.execute(
+    cursor.execute(
         """
         INSERT INTO products (name, price, description, stock, images)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s)
+        RETURNING id
         """,
         (name, price, description, stock, "[]")
     )
-    product_id = cursor.lastrowid
+
+    product_id = cursor.fetchone()["id"]
 
     for idx, file in enumerate(files):
         if file and allowed_file(file.filename):
@@ -60,12 +63,14 @@ def add_product():
             file.save(filepath)
             saved_images.append(filename)
 
-    db.execute(
-        "UPDATE products SET images = ? WHERE id = ?",
+    cursor.execute(
+        "UPDATE products SET images = %s WHERE id = %s",
         (json.dumps(saved_images), product_id)
     )
 
     db.commit()
+    cursor.close()
+
     return jsonify({"message": "Product added with images"}), 201
 
 
@@ -75,7 +80,10 @@ def add_product():
 @admin.route("/products", methods=["GET"])
 def get_products():
     db = get_db()
-    products = db.execute("SELECT * FROM products").fetchall()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+    cursor.close()
 
     return jsonify([
         {
@@ -96,10 +104,13 @@ def get_products():
 @admin.route("/products/<int:product_id>", methods=["GET"])
 def get_product(product_id):
     db = get_db()
-    p = db.execute(
-        "SELECT * FROM products WHERE id = ?",
+    cursor = db.cursor()
+    cursor.execute(
+        "SELECT * FROM products WHERE id = %s",
         (product_id,)
-    ).fetchone()
+    )
+    p = cursor.fetchone()
+    cursor.close()
 
     if not p:
         return jsonify({"error": "Product not found"}), 404
@@ -122,7 +133,10 @@ def get_product(product_id):
 @admin_required
 def admin_get_products():
     db = get_db()
-    products = db.execute("SELECT * FROM products").fetchall()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+    cursor.close()
 
     return jsonify([
         {
@@ -144,11 +158,13 @@ def admin_get_products():
 @admin_required
 def delete_product(pid):
     db = get_db()
+    cursor = db.cursor()
 
-    product = db.execute(
-        "SELECT images FROM products WHERE id = ?",
+    cursor.execute(
+        "SELECT images FROM products WHERE id = %s",
         (pid,)
-    ).fetchone()
+    )
+    product = cursor.fetchone()
 
     if product and product["images"]:
         try:
@@ -160,8 +176,9 @@ def delete_product(pid):
         except Exception as e:
             print("Image delete error:", e)
 
-    db.execute("DELETE FROM products WHERE id = ?", (pid,))
+    cursor.execute("DELETE FROM products WHERE id = %s", (pid,))
     db.commit()
+    cursor.close()
 
     return jsonify({"message": "Product and images deleted"})
 
@@ -175,17 +192,20 @@ def delete_product(pid):
 def update_product(pid):
     data = request.json
     db = get_db()
+    cursor = db.cursor()
 
-    db.execute(
+    cursor.execute(
         """
         UPDATE products
-        SET price = ?, stock = ?
-        WHERE id = ?
+        SET price = %s, stock = %s
+        WHERE id = %s
         """,
         (data["price"], data["stock"], pid)
     )
 
     db.commit()
+    cursor.close()
+
     return jsonify({"message": "Product updated"})
 
 
@@ -197,9 +217,12 @@ def update_product(pid):
 @admin_required
 def get_orders():
     db = get_db()
-    orders = db.execute(
+    cursor = db.cursor()
+    cursor.execute(
         "SELECT * FROM orders ORDER BY created_at DESC"
-    ).fetchall()
+    )
+    orders = cursor.fetchall()
+    cursor.close()
 
     return jsonify([
         {

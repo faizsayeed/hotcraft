@@ -1,11 +1,12 @@
 from database import get_db
 
-
 def create_table():
     db = get_db()
-    db.execute("""
+    cursor = db.cursor()
+
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS products (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             name TEXT,
             price INTEGER,
             description TEXT,
@@ -13,5 +14,6 @@ def create_table():
             images TEXT
         )
     """)
-    db.commit()
 
+    db.commit()
+    cursor.close()
