@@ -1,53 +1,39 @@
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import get_db
-
 
 def create_users_table(db):
-    cursor = db.cursor()
-    cursor.execute("""
+    cur = db.cursor()
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
-            username TEXT UNIQUE NOT NULL,
+            name TEXT,
+            email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            is_admin BOOLEAN DEFAULT FALSE,
+            role TEXT DEFAULT 'admin',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
     db.commit()
-    cursor.close()
+    cur.close()
 
 
-def create_user(username, password, is_admin=False):
-    db = get_db()
-    cursor = db.cursor()
-
+def create_user(db, name, email, password, role="admin"):
     hashed = generate_password_hash(password)
-
-    cursor.execute("""
-        INSERT INTO users (username, password, is_admin)
-        VALUES (%s, %s, %s)
-        RETURNING id
-    """, (username, hashed, is_admin))
-
-    user_id = cursor.fetchone()["id"]
+    cur = db.cursor()
+    cur.execute("""
+        INSERT INTO users (name, email, password, role)
+        VALUES (%s, %s, %s, %s)
+    """, (name, email, hashed, role))
     db.commit()
-    cursor.close()
-    db.close()
-
-    return user_id
+    cur.close()
 
 
-def verify_user(username, password):
-    db = get_db()
-    cursor = db.cursor()
-
-    cursor.execute("""
-        SELECT * FROM users WHERE username = %s
-    """, (username,))
-
-    user = cursor.fetchone()
-    cursor.close()
-    db.close()
+def verify_user(db, email, password):
+    cur = db.cursor()
+    cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+    user = cur.fetchone()
+    cur.close()
 
     if not user:
         return None
