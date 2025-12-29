@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from database import get_db
 from models.user import create_user, verify_user
 import jwt
 import datetime
@@ -15,19 +16,23 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 @auth.route("/register", methods=["POST"])
 def register():
     data = request.json
-
+    name = data.get("name")
     email = data.get("email")
     password = data.get("password")
 
-    if not email or not password:
+    if not name or not email or not password:
         return jsonify({"error": "All fields required"}), 400
 
+    db = get_db()
     try:
-        create_user(email, password, is_admin=False)
+        create_user(db, name, email, password, is_admin=False)
+        db.commit()
     except Exception:
-        return jsonify({"error": "User already exists"}), 409
+        return jsonify({"error": "Email already exists"}), 409
+    finally:
+        db.close()
 
-    return jsonify({"message": "User registered successfully"}), 201
+    return jsonify({"message": "User registered"}), 201
 
 
 # -----------------------------
@@ -36,15 +41,15 @@ def register():
 @auth.route("/login", methods=["POST"])
 def login():
     data = request.json
-
     email = data.get("email")
     password = data.get("password")
 
     if not email or not password:
         return jsonify({"error": "Email & password required"}), 400
 
-    # username == email in your system
-    user = verify_user(email, password)
+    db = get_db()
+    user = verify_user(db, email, password)
+    db.close()
 
     if not user:
         return jsonify({"error": "Invalid credentials"}), 401
@@ -52,7 +57,7 @@ def login():
     token = jwt.encode(
         {
             "id": user["id"],
-            "username": user["username"],
+            "email": user["email"],
             "is_admin": user["is_admin"],
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
         },
@@ -64,14 +69,14 @@ def login():
         "token": token,
         "user": {
             "id": user["id"],
-            "username": user["username"],
+            "email": user["email"],
             "is_admin": user["is_admin"]
         }
     })
 
 
 # -----------------------------
-# TEMP CREATE ADMIN (DELETE LATER)
+# CREATE ADMIN (ONE TIME)
 # -----------------------------
 @auth.route("/create-admin", methods=["POST"])
 def create_admin():
@@ -82,5 +87,9 @@ def create_admin():
     if not email or not password:
         return jsonify({"error": "Missing credentials"}), 400
 
-    create_user(email, password, is_admin=True)
+    db = get_db()
+    create_user(db, "Admin", email, password, is_admin=True)
+    db.commit()
+    db.close()
+
     return jsonify({"message": "Admin created"}), 201
