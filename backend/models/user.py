@@ -9,7 +9,7 @@ def create_users_table(db):
             id SERIAL PRIMARY KEY,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            role TEXT DEFAULT 'admin',
+            is_admin BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -17,17 +17,17 @@ def create_users_table(db):
     cursor.close()
 
 
-def create_user(username, password, role="admin"):
+def create_user(username, password, is_admin=False):
     db = get_db()
     cursor = db.cursor()
 
     hashed = generate_password_hash(password)
 
     cursor.execute("""
-        INSERT INTO users (username, password, role)
+        INSERT INTO users (username, password, is_admin)
         VALUES (%s, %s, %s)
         RETURNING id
-    """, (username, hashed, role))
+    """, (username, hashed, is_admin))
 
     user_id = cursor.fetchone()["id"]
     db.commit()
