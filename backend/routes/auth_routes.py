@@ -8,7 +8,8 @@ import datetime
 JWT_SECRET = "HOTCRAFT_SECRET_KEY"
 JWT_ALGO = "HS256"
 
-auth = Blueprint("auth", __name__)
+auth = Blueprint("auth", __name__, url_prefix="/auth")
+
 
 # -----------------------------
 # REGISTER
@@ -85,5 +86,19 @@ def create_admin():
 
     from models.user import create_user
     create_user(username, password, is_admin=True)
+
+    return jsonify({"message": "Admin created"}), 201
+
+@auth.route("/create-admin", methods=["POST"])
+def create_admin():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Missing credentials"}), 400
+
+    from models.user import create_user
+    create_user(email, password, is_admin=True)
 
     return jsonify({"message": "Admin created"}), 201
