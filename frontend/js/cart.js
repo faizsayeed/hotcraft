@@ -1,3 +1,7 @@
+/* =====================================================
+   CART.JS — PRODUCTION SAFE (IMAGE FIXED)
+===================================================== */
+
 function renderCart() {
   const container = document.getElementById("cartContainer");
   const totalEl = document.getElementById("cartTotal");
@@ -8,6 +12,9 @@ function renderCart() {
   const cart = getCart();
   container.innerHTML = "";
 
+  /* ======================
+     EMPTY CART
+  ====================== */
   if (!cart.length) {
     container.innerHTML = "<p>Your cart is empty.</p>";
     totalEl.innerText = "0";
@@ -18,15 +25,24 @@ function renderCart() {
 
   let total = 0;
 
+  /* ======================
+     RENDER ITEMS
+  ====================== */
   cart.forEach(p => {
     const qty = Number(p.quantity) || 0;
     const price = Number(p.price) || 0;
+    if (qty <= 0) return;
 
-    if (qty <= 0) return; // 🔒 SAFETY
+    /* ======================
+       IMAGE FIX (CRITICAL)
+    ====================== */
+    let image = "https://via.placeholder.com/120?text=Hotcraft";
 
-    const image = p.image
-      ? `${API}/uploads/${p.image}`
-      : "https://via.placeholder.com/120?text=Hotcraft";
+    if (p.image && typeof p.image === "string") {
+      image = p.image.startsWith("http")
+        ? p.image
+        : `${API}/uploads/${p.image}`;
+    }
 
     total += price * qty;
 
@@ -52,10 +68,16 @@ function renderCart() {
     `;
   });
 
+  /* ======================
+     TOTALS
+  ====================== */
   totalEl.innerText = total;
   if (finalEl) finalEl.innerText = total;
 
   updateCartCount();
 }
 
+/* ======================
+   INIT
+====================== */
 document.addEventListener("DOMContentLoaded", renderCart);

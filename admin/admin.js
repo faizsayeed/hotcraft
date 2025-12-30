@@ -55,22 +55,34 @@ function loadProducts() {
         // Staggered animation delay
         productDiv.style.animationDelay = `${index * 0.05}s`;
         
-        productDiv.innerHTML = `
-          <div>
-            <strong>${p.name}</strong>
-            <div style="font-size: 11px; color: #888; margin-top:4px;">
-              ₹${p.price} | Stock: ${p.stock}
-              ${p.stock < 3 ? `<span class="low">LOW STOCK</span>` : ""}
-            </div>
-          </div>
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <input type="number" value="${p.stock}" 
-                   style="width: 60px; margin-bottom:0;"
-                   onchange="updateProduct(${p.id}, ${p.price}, this.value)">
-            <button class="danger" onclick="removeProduct(${p.id})" 
-                    style="background: #ff3b3b; padding: 8px 12px;">Delete</button>
-          </div>
-        `;
+        const img = (Array.isArray(p.images) && p.images.length > 0)
+  ? p.images[0]
+  : "https://via.placeholder.com/80?text=No+Image";
+
+productDiv.innerHTML = `
+  <div style="display:flex; gap:12px; align-items:center;">
+    <img 
+      src="${img}" 
+      style="width:60px;height:60px;object-fit:cover;border-radius:6px;"
+    />
+
+    <div>
+      <strong>${p.name}</strong>
+      <div style="font-size: 11px; color: #888; margin-top:4px;">
+        ₹${p.price} | Stock: ${p.stock}
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:10px; align-items:center;">
+    <input type="number" value="${p.stock}"
+      style="width:60px;"
+      onchange="updateProduct(${p.id}, ${p.price}, this.value)">
+    <button class="danger"
+      onclick="removeProduct(${p.id})">Delete</button>
+  </div>
+`;
+
         list.appendChild(productDiv);
       });
     })
