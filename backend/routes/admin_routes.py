@@ -1,6 +1,15 @@
 from flask import Blueprint, request, jsonify
 from database import get_db
 import json
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 # 🔐 AUTH
 from utils.auth import token_required, admin_required
@@ -29,44 +38,46 @@ admin = Blueprint("admin", __name__)
 @token_required
 @admin_required
 def add_product():
-    name = request.form.get("name")
-    price = request.form.get("price")
-    stock = request.form.get("stock")
-    description = request.form.get("description")
+    try:
+        name = request.form.get("name")
+        price = request.form.get("price")
+        stock = request.form.get("stock")
+        description = request.form.get("description")
 
-    files = request.files.getlist("images")
-    image_urls = []
+        files = request.files.getlist("images")
+        image_urls = []
 
-    # 🔥 Upload images to Cloudinary
-    for file in files:
-        if file:
-            upload = cloudinary.uploader.upload(
-                file,
-                folder="hotcraft/products",
-                resource_type="image"
-            )
-            image_urls.append(upload["secure_url"])
+        for file in files:
+            if file:
+                upload = cloudinary.uploader.upload(
+                    file,
+                    folder="hotcraft/products"
+                )
+                image_urls.append(upload["secure_url"])
 
-    db = get_db()
-    cursor = db.cursor()
+        db = get_db()
+        cursor = db.cursor()
 
-    cursor.execute("""
-        INSERT INTO products (name, price, description, stock, images)
-        VALUES (%s, %s, %s, %s, %s)
-        RETURNING id
-    """, (
-        name,
-        price,
-        description,
-        stock,
-        json.dumps(image_urls)
-    ))
+        cursor.execute("""
+            INSERT INTO products (name, price, description, stock, images)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (
+            name,
+            price,
+            description,
+            stock,
+            json.dumps(image_urls)
+        ))
 
-    db.commit()
-    cursor.close()
-    db.close()
+        db.commit()
+        cursor.close()
+        db.close()
 
-    return jsonify({"message": "Product added with images"}), 201
+        return jsonify({"message": "Product added successfully"}), 201
+
+    except Exception as e:
+        print("🔥 CLOUDINARY ERROR:", str(e))
+        return jsonify({"error": str(e)}), 500
 
 # ------------------------------------------------
 # PUBLIC PRODUCTS (SHOP) 🚫 CACHE DISABLED
