@@ -1,21 +1,20 @@
-import psycopg2
 from psycopg2.extras import RealDictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # -----------------------------
-# CREATE USERS TABLE
+# CREATE USERS TABLE (SAFE)
 # -----------------------------
 def create_users_table(db):
     cur = db.cursor()
     cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
-            name TEXT NOT NULL,
+            username TEXT UNIQUE NOT NULL,
             email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            role TEXT DEFAULT 'user',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            name TEXT,
+            is_admin BOOLEAN DEFAULT FALSE
         )
     """)
     db.commit()
@@ -25,14 +24,15 @@ def create_users_table(db):
 # -----------------------------
 # CREATE USER
 # -----------------------------
-def create_user(db, name, email, password, role="user"):
+def create_user(db, name, email, password, is_admin=False):
     cur = db.cursor()
     hashed = generate_password_hash(password)
 
+    # username = email (simple + consistent)
     cur.execute("""
-        INSERT INTO users (name, email, password, role)
-        VALUES (%s, %s, %s, %s)
-    """, (name, email, hashed, role))
+        INSERT INTO users (username, email, password, name, is_admin)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (email, email, hashed, name, is_admin))
 
     db.commit()
     cur.close()
