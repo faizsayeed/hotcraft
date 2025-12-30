@@ -1,31 +1,23 @@
 from flask import Blueprint, request, jsonify
 from database import get_db
 import json
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 import os
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 from utils.auth import token_required, admin_required
+
+# ------------------------------------------------
+# CLOUDINARY CONFIG
+# ------------------------------------------------
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
     api_secret=os.getenv("CLOUDINARY_API_SECRET"),
     secure=True
 )
-
-# 🔐 AUTH
-
-
-# ☁️ CLOUDINARY
-
-
-# ------------------------------------------------
-# CLOUDINARY CONFIG
-# ------------------------------------------------
-
 
 admin = Blueprint("admin", __name__)
 
@@ -45,14 +37,14 @@ def add_product():
         files = request.files.getlist("images")
         image_urls = []
 
+        # ✅ UPLOAD TO CLOUDINARY
         for file in files:
             if file:
-                 result = cloudinary.uploader.upload(
+                result = cloudinary.uploader.upload(
                     file,
                     folder="hotcraft/products"
-            )
-            saved_images.append(result["secure_url"])
-
+                )
+                image_urls.append(result["secure_url"])
 
         db = get_db()
         cursor = db.cursor()
@@ -75,11 +67,12 @@ def add_product():
         return jsonify({"message": "Product added successfully"}), 201
 
     except Exception as e:
-        print("🔥 CLOUDINARY ERROR:", str(e))
+        print("🔥 ADD PRODUCT ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
 
+
 # ------------------------------------------------
-# PUBLIC PRODUCTS (SHOP) 🚫 CACHE DISABLED
+# PUBLIC PRODUCTS (SHOP)
 # ------------------------------------------------
 @admin.route("/products", methods=["GET"])
 def get_products():
@@ -106,32 +99,6 @@ def get_products():
     response.headers["Pragma"] = "no-cache"
     return response
 
-# ------------------------------------------------
-# SINGLE PRODUCT (PUBLIC)
-# ------------------------------------------------
-@admin.route("/products/<int:product_id>", methods=["GET"])
-def get_product(product_id):
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM products WHERE id = %s", (product_id,))
-    p = cursor.fetchone()
-    cursor.close()
-    db.close()
-
-    if not p:
-        return jsonify({"error": "Product not found"}), 404
-
-    response = jsonify({
-        "id": p["id"],
-        "name": p["name"],
-        "price": p["price"],
-        "description": p["description"],
-        "stock": p["stock"],
-        "images": json.loads(p["images"]) if p["images"] else []
-    })
-
-    response.headers["Cache-Control"] = "no-store"
-    return response
 
 # ------------------------------------------------
 # ADMIN PRODUCTS VIEW
@@ -158,8 +125,9 @@ def admin_get_products():
         for p in products
     ])
 
+
 # ------------------------------------------------
-# DELETE PRODUCT (ADMIN ONLY)
+# DELETE PRODUCT
 # ------------------------------------------------
 @admin.route("/admin/products/<int:pid>", methods=["DELETE"])
 @token_required
@@ -171,7 +139,7 @@ def delete_product(pid):
     cursor.execute("SELECT images FROM products WHERE id = %s", (pid,))
     product = cursor.fetchone()
 
-    # 🔥 Optional: delete images from Cloudinary
+    # OPTIONAL: delete from cloudinary
     if product and product["images"]:
         try:
             for url in json.loads(product["images"]):
@@ -187,8 +155,9 @@ def delete_product(pid):
 
     return jsonify({"message": "Product deleted"})
 
+
 # ------------------------------------------------
-# UPDATE PRODUCT (ADMIN ONLY)
+# UPDATE PRODUCT
 # ------------------------------------------------
 @admin.route("/admin/products/<int:pid>", methods=["PUT"])
 @token_required
@@ -210,8 +179,9 @@ def update_product(pid):
 
     return jsonify({"message": "Product updated"})
 
+
 # ------------------------------------------------
-# ADMIN ORDERS VIEW
+# ADMIN ORDERS
 # ------------------------------------------------
 @admin.route("/admin/orders", methods=["GET"])
 @token_required

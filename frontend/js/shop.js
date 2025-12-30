@@ -65,7 +65,8 @@ fetch(`${API}/products?t=${new Date().getTime()}`, {
       }
 
       if (images.length > 0) {
-        img = `${API}/uploads/${images[0]}`;
+        img = images[0]
+
       }
 
       // Create Card
