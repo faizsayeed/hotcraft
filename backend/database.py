@@ -8,14 +8,13 @@ from psycopg2.extras import RealDictCursor
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
-    raise RuntimeError("postgresql://hotcraft_db_user:ylrXYdrgqbKXr8PBSiDViFM0j7iGZJ0L@dpg-d594qcbuibrs73b2ulj0-a/hotcraft_db")
+    raise RuntimeError("DATABASE_URL environment variable not set")
 
 def get_db():
     """
     Returns a PostgreSQL connection.
     """
-    conn = psycopg2.connect(
+    return psycopg2.connect(
         DATABASE_URL,
         cursor_factory=RealDictCursor
     )
-    return conn

@@ -50,16 +50,16 @@
 
 <!-- 🔐 AUTH CHECK -->
 <script>
-  const token = localStorage.getItem("token");
-  if (!token) {
+  if (!localStorage.getItem("hotcraft_token")) {
     window.location.href = "login.html";
   }
 
   function logoutAdmin() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("hotcraft_token");
     window.location.href = "login.html";
   }
 </script>
+
 
 <!-- ✅ ORDER MATTERS -->
 <script src="../frontend/js/config.js"></script>

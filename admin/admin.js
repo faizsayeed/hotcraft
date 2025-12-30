@@ -2,18 +2,24 @@
    AUTH HELPER
 ======================= */
 
+if (!localStorage.getItem("hotcraft_token")) {
+  window.location.href = "login.html";
+}
 
 function getAuthHeaders(isJson = false) {
   const token = localStorage.getItem("hotcraft_token");
 
   if (!token) {
-    showToast("Admin not logged in", "error");
-    throw new Error("No token found");
+    alert("Admin not logged in");
+    window.location.href = "login.html";
+    throw new Error("No token");
   }
-  const headers = { "Authorization": "Bearer " + token };
+
+  const headers = { Authorization: "Bearer " + token };
   if (isJson) headers["Content-Type"] = "application/json";
   return headers;
 }
+
 
 /* =======================
    TOAST NOTIFICATIONS
