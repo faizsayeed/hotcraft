@@ -39,10 +39,8 @@ def token_required(f):
 def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        # SAFELY check admin flag
         if not request.user.get("is_admin"):
             return jsonify({"error": "Admin access required"}), 403
-
         return f(*args, **kwargs)
-
     return decorated
+
