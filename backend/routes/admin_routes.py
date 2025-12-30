@@ -37,15 +37,19 @@ def add_product():
         files = request.files.getlist("images")
         image_urls = []
 
-        # ✅ UPLOAD TO CLOUDINARY
+        # 🔥 UPLOAD ALL IMAGES
         for file in files:
-            if file:
-                result = cloudinary.uploader.upload(
-                    file,
-                    folder="hotcraft/products"
-                )
-                image_urls.append(result["secure_url"])
+            if not file:
+                continue
 
+            result = cloudinary.uploader.upload(
+                file,
+                folder="hotcraft/products"
+            )
+
+            image_urls.append(result["secure_url"])
+
+        # 🔥 SAVE TO DATABASE
         db = get_db()
         cursor = db.cursor()
 
@@ -83,7 +87,7 @@ def get_products():
     cursor.close()
     db.close()
 
-    response = jsonify([
+    return jsonify([
         {
             "id": p["id"],
             "name": p["name"],
@@ -94,10 +98,6 @@ def get_products():
         }
         for p in products
     ])
-
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-    return response
 
 
 # ------------------------------------------------
@@ -139,7 +139,6 @@ def delete_product(pid):
     cursor.execute("SELECT images FROM products WHERE id = %s", (pid,))
     product = cursor.fetchone()
 
-    # OPTIONAL: delete from cloudinary
     if product and product["images"]:
         try:
             for url in json.loads(product["images"]):
