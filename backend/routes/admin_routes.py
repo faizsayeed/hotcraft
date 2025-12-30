@@ -25,11 +25,7 @@ cloudinary.config(
 # ------------------------------------------------
 # CLOUDINARY CONFIG
 # ------------------------------------------------
-cloudinary.config(
-    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.getenv("CLOUDINARY_API_KEY"),
-    api_secret=os.getenv("CLOUDINARY_API_SECRET")
-)
+
 
 admin = Blueprint("admin", __name__)
 
@@ -51,11 +47,12 @@ def add_product():
 
         for file in files:
             if file:
-                upload = cloudinary.uploader.upload(
+                 result = cloudinary.uploader.upload(
                     file,
                     folder="hotcraft/products"
-                )
-                image_urls.append(upload["secure_url"])
+            )
+            saved_images.append(result["secure_url"])
+
 
         db = get_db()
         cursor = db.cursor()
