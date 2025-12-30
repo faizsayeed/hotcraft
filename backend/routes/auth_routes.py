@@ -9,8 +9,9 @@ JWT_ALGO = "HS256"
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
+
 # -----------------------------
-# REGISTER USER
+# REGISTER (NORMAL USER)
 # -----------------------------
 @auth.route("/register", methods=["POST"])
 def register():
@@ -24,10 +25,9 @@ def register():
 
     db = get_db()
     try:
-        create_user(db, name, email, password, role="user")
-        db.commit()
+        create_user(db, name, email, password, is_admin=False)
     except Exception as e:
-        return jsonify({"error": "Email already exists"}), 409
+        return jsonify({"error": "User already exists"}), 409
     finally:
         db.close()
 
@@ -57,7 +57,7 @@ def login():
         {
             "id": user["id"],
             "email": user["email"],
-            "role": user["role"],
+            "is_admin": user["is_admin"],
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
         },
         JWT_SECRET,
@@ -70,7 +70,7 @@ def login():
             "id": user["id"],
             "name": user["name"],
             "email": user["email"],
-            "role": user["role"]
+            "is_admin": user["is_admin"]
         }
     })
 
@@ -88,8 +88,11 @@ def create_admin():
         return jsonify({"error": "Missing credentials"}), 400
 
     db = get_db()
-    create_user(db, "Admin", email, password, role="admin")
-    db.commit()
-    db.close()
+    try:
+        create_user(db, "Admin", email, password, is_admin=True)
+    except Exception:
+        return jsonify({"error": "Admin already exists"}), 409
+    finally:
+        db.close()
 
     return jsonify({"message": "Admin created"}), 201
