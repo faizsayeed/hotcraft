@@ -4,6 +4,11 @@ import json
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import os
+from utils.auth import token_required, admin_required
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
@@ -12,13 +17,10 @@ cloudinary.config(
 )
 
 # 🔐 AUTH
-from utils.auth import token_required, admin_required
+
 
 # ☁️ CLOUDINARY
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-import os
+
 
 # ------------------------------------------------
 # CLOUDINARY CONFIG
