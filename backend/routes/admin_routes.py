@@ -1,28 +1,24 @@
 from flask import Blueprint, request, jsonify
 from database import get_db
-import os
 import json
-from werkzeug.utils import secure_filename
 
 # 🔐 AUTH
 from utils.auth import token_required, admin_required
 
-# ------------------------------------------------
-# PATH CONFIG
-# ------------------------------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# ☁️ CLOUDINARY
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import os
 
-UPLOAD_FOLDER = os.path.normpath(
-    os.path.join(BASE_DIR, "..", "static", "uploads", "products")
+# ------------------------------------------------
+# CLOUDINARY CONFIG
+# ------------------------------------------------
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
 )
-
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
-
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 admin = Blueprint("admin", __name__)
 
@@ -39,33 +35,32 @@ def add_product():
     description = request.form.get("description")
 
     files = request.files.getlist("images")
-    saved_images = []
+    image_urls = []
+
+    # 🔥 Upload images to Cloudinary
+    for file in files:
+        if file:
+            upload = cloudinary.uploader.upload(
+                file,
+                folder="hotcraft/products",
+                resource_type="image"
+            )
+            image_urls.append(upload["secure_url"])
 
     db = get_db()
     cursor = db.cursor()
 
-    cursor.execute(
-        """
+    cursor.execute("""
         INSERT INTO products (name, price, description, stock, images)
         VALUES (%s, %s, %s, %s, %s)
         RETURNING id
-        """,
-        (name, price, description, stock, "[]")
-    )
-
-    product_id = cursor.fetchone()["id"]
-
-    for idx, file in enumerate(files):
-        if file and allowed_file(file.filename):
-            ext = file.filename.rsplit(".", 1)[1].lower()
-            filename = f"product_{product_id}_{idx}.{ext}"
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            saved_images.append(filename)
-
-    cursor.execute(
-        "UPDATE products SET images = %s WHERE id = %s",
-        (json.dumps(saved_images), product_id)
-    )
+    """, (
+        name,
+        price,
+        description,
+        stock,
+        json.dumps(image_urls)
+    ))
 
     db.commit()
     cursor.close()
@@ -73,9 +68,8 @@ def add_product():
 
     return jsonify({"message": "Product added with images"}), 201
 
-
 # ------------------------------------------------
-# PUBLIC PRODUCTS (SHOP)  🚫 CACHE DISABLED
+# PUBLIC PRODUCTS (SHOP) 🚫 CACHE DISABLED
 # ------------------------------------------------
 @admin.route("/products", methods=["GET"])
 def get_products():
@@ -98,24 +92,18 @@ def get_products():
         for p in products
     ])
 
-    # 🔥 CRITICAL: Disable Cloudflare caching
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
-
     return response
 
-
 # ------------------------------------------------
-# SINGLE PRODUCT (PUBLIC) 🚫 CACHE DISABLED
+# SINGLE PRODUCT (PUBLIC)
 # ------------------------------------------------
 @admin.route("/products/<int:product_id>", methods=["GET"])
 def get_product(product_id):
     db = get_db()
     cursor = db.cursor()
-    cursor.execute(
-        "SELECT * FROM products WHERE id = %s",
-        (product_id,)
-    )
+    cursor.execute("SELECT * FROM products WHERE id = %s", (product_id,))
     p = cursor.fetchone()
     cursor.close()
     db.close()
@@ -132,12 +120,8 @@ def get_product(product_id):
         "images": json.loads(p["images"]) if p["images"] else []
     })
 
-    # 🔥 CRITICAL: Disable Cloudflare caching
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-
+    response.headers["Cache-Control"] = "no-store"
     return response
-
 
 # ------------------------------------------------
 # ADMIN PRODUCTS VIEW
@@ -164,7 +148,6 @@ def admin_get_products():
         for p in products
     ])
 
-
 # ------------------------------------------------
 # DELETE PRODUCT (ADMIN ONLY)
 # ------------------------------------------------
@@ -175,28 +158,24 @@ def delete_product(pid):
     db = get_db()
     cursor = db.cursor()
 
-    cursor.execute(
-        "SELECT images FROM products WHERE id = %s",
-        (pid,)
-    )
+    cursor.execute("SELECT images FROM products WHERE id = %s", (pid,))
     product = cursor.fetchone()
 
+    # 🔥 Optional: delete images from Cloudinary
     if product and product["images"]:
         try:
-            for img in json.loads(product["images"]):
-                img_path = os.path.join(UPLOAD_FOLDER, img)
-                if os.path.exists(img_path):
-                    os.remove(img_path)
+            for url in json.loads(product["images"]):
+                public_id = url.split("/")[-1].split(".")[0]
+                cloudinary.uploader.destroy(f"hotcraft/products/{public_id}")
         except Exception as e:
-            print("Image delete error:", e)
+            print("Cloudinary delete error:", e)
 
     cursor.execute("DELETE FROM products WHERE id = %s", (pid,))
     db.commit()
     cursor.close()
     db.close()
 
-    return jsonify({"message": "Product and images deleted"})
-
+    return jsonify({"message": "Product deleted"})
 
 # ------------------------------------------------
 # UPDATE PRODUCT (ADMIN ONLY)
@@ -209,21 +188,17 @@ def update_product(pid):
     db = get_db()
     cursor = db.cursor()
 
-    cursor.execute(
-        """
+    cursor.execute("""
         UPDATE products
         SET price = %s, stock = %s
         WHERE id = %s
-        """,
-        (data["price"], data["stock"], pid)
-    )
+    """, (data["price"], data["stock"], pid))
 
     db.commit()
     cursor.close()
     db.close()
 
     return jsonify({"message": "Product updated"})
-
 
 # ------------------------------------------------
 # ADMIN ORDERS VIEW

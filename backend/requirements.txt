@@ -4,3 +4,4 @@ werkzeug
 pyjwt
 psycopg2-binary
 gunicorn
+cloudinary
