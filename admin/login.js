@@ -17,13 +17,17 @@ function loginAdmin() {
   })
     .then(res => res.json())
     .then(data => {
-      if (data.error || !data.user || data.user.role !== "ADMIN") {
-        form.classList.add("wrong-entry");
-        setTimeout(() => form.classList.remove("wrong-entry"), 1500);
-        return;
-      }
+      if (data.error || !data.user || !data.user.is_admin) {
+  form.classList.add("wrong-entry");
+  setTimeout(() => form.classList.remove("wrong-entry"), 1500);
+  return;
+}
 
-      localStorage.setItem("token", data.token);
+
+
+localStorage.setItem("hotcraft_token", data.token);
+localStorage.setItem("hotcraft_user", JSON.stringify(data.user));
+
       window.location.href = "/admin/admin.html";
     })
     .catch(() => {
