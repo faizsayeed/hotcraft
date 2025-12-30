@@ -33,7 +33,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  width: 100%; /* Ensures it stays within screen bounds */
+  width: 100%; 
   z-index: 1000;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(20px);
@@ -78,7 +78,6 @@ body {
   opacity: 1;
 }
 
-/* Figma-style Underline */
 .shop-navbar .nav-links a::after {
   content: "";
   position: absolute;
@@ -125,17 +124,17 @@ body {
   font-weight: 900;
 }
 
-/* =========================
-   PRODUCT PAGE LAYOUT
-========================= */
+/* =====================================================
+   PRODUCT PAGE LAYOUT (UPDATED FOR SHOP.CSS ALIGNMENT)
+===================================================== */
 
 .product-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 60px;
-  margin: 120px auto 60px;
-  padding: 0 50px;
-  max-width: 1300px;
+  gap: 10px; /* Reduced from 60px to match shop style */
+  margin: 100px auto 40px;
+  padding: 0 5px; /* Matches shop-wrapper padding */
+  max-width: 100%; /* Removes the 1300px constraint */
   animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -149,24 +148,22 @@ body {
 ========================= */
 
 .product-gallery {
-  width: 100%;
-  max-width: 520px;
-  height: 320px;
-  background: #111;
-  border-radius: 12px;
-  overflow: hidden;
+  background: #0f0f0f;
+  padding: 20px; /* Reduced from 40px */
+  border-radius: 2px; /* Matches shop card radius */
+  border: 1px solid #1a1a1a;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .product-gallery img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;   /* 🔥 THIS FIXES IT */
-  display: block;
+  max-height: 600px;
+  object-fit: contain;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 
 .product-gallery:hover img {
   transform: scale(1.08);
@@ -180,6 +177,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 20px; /* Internal padding for text breathing room */
 }
 
 .product-details h1 {
@@ -278,20 +276,21 @@ body {
 }
 
 /* =========================
-   SIMILAR PRODUCTS
+   SIMILAR PRODUCTS (EDGE-TO-EDGE)
 ========================= */
 
 .similar-products {
   width: 100%;
-  max-width: 1300px;
-  margin: 100px auto;
-  padding: 0 50px;
+  max-width: 100%;
+  margin: 100px auto 40px;
+  padding: 0 5px; /* Matches shop-wrapper */
 }
 
 .similar-products h2 {
   font-size: 14px;
   font-weight: 900;
   margin-bottom: 30px;
+  padding-left: 10px; /* Slight offset for title */
   letter-spacing: 3px;
   color: #444;
 }
@@ -299,7 +298,7 @@ body {
 .similar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
+  gap: 5px; /* Matches shop product-grid gap */
 }
 
 .similar-card {
@@ -319,7 +318,7 @@ body {
 
 .similar-card img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -344,45 +343,46 @@ body {
   font-weight: 800;
 }
 
-/* =========================
+/* =====================================================
    MOBILE RESPONSIVE FIX
-========================= */
+===================================================== */
 
 @media (max-width: 900px) {
   .shop-navbar {
-    padding: 15px 25px; /* Reduced padding prevents overflow */
+    padding: 15px 15px;
   }
 
   .product-layout {
     grid-template-columns: 1fr;
-    padding: 0 20px;
+    padding: 0 5px; /* Keeps products close to left/right */
     margin-top: 100px;
+    gap: 20px;
   }
   
   .similar-products {
-    padding: 0 20px;
+    padding: 0 5px;
   }
 
   .similar-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
   }
 }
 
 @media (max-width: 600px) {
-  .brand-name { display: none; } /* Show icon only to save space */
+  .brand-name { display: none; } 
   
   .shop-navbar .nav-links {
-    gap: 15px; /* Tighter gap for small screens */
+    gap: 15px;
   }
 
   .shop-navbar .nav-links a {
     font-size: 11px;
   }
 
-  .similar-grid { grid-template-columns: repeat(2, 1fr); }
   .btn { font-size: 11px; }
 
   .cart-badge {
-    right: -8px; /* Pulled in slightly for mobile */
+    right: -8px;
   }
 }
