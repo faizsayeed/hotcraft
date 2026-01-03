@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
 from database import get_db
 import json
 import os
@@ -76,7 +76,7 @@ def add_product():
 
 
 # ------------------------------------------------
-# PUBLIC PRODUCTS (SHOP)
+# PUBLIC PRODUCTS (SHOP)  ✅ PERFORMANCE FIXED
 # ------------------------------------------------
 @admin.route("/products", methods=["GET"])
 def get_products():
@@ -87,7 +87,7 @@ def get_products():
     cursor.close()
     db.close()
 
-    return jsonify([
+    response = make_response(jsonify([
         {
             "id": p["id"],
             "name": p["name"],
@@ -97,7 +97,12 @@ def get_products():
             "images": json.loads(p["images"]) if p["images"] else []
         }
         for p in products
-    ])
+    ]))
+
+    # 🔥 CRITICAL PERFORMANCE HEADERS
+    response.headers["Cache-Control"] = "public, max-age=300, stale-while-revalidate=60"
+
+    return response
 
 
 # ------------------------------------------------
